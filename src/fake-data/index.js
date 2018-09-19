@@ -30,6 +30,22 @@ export const categories = [
 
 const randomOf = lis => lis[Math.floor(Math.random() * lis.length)];
 
+export const bizList = range(0, 100).map(i => ({
+   id: uuid4(),
+   name: Faker.company.companyName(),
+   address: Faker.address.city() + " " + Faker.address.streetAddress(),
+   phoneNumbers: [
+      Faker.phone.phoneNumber(),
+      Faker.phone.phoneNumber(),
+      Faker.phone.phoneNumber()
+   ],
+   description: Faker.lorem.sentence(),
+   image: { uri: Faker.image.avatar() },
+   category: randomOf(categories),
+   tags: randomOf(tags),
+   online: Math.random() > 0.5
+}));
+
 export const generate = number => {
    return new Promise((resolve, reject) => {
       this.setTimeout(() => {
@@ -47,7 +63,7 @@ export const generate = number => {
                ],
                description: Faker.lorem.sentence(),
                image: { uri: Faker.image.avatar() },
-               category: randomOf(categories).name,
+               category: randomOf(categories),
                tags: randomOf(tags),
                online: Math.random() > 0.5
             }))
@@ -87,6 +103,6 @@ export const chats = range(0, 20).map(i => ({
    lastMessage: Faker.lorem.sentence(),
    tags: randomOf(tags),
    online: Math.random() > 0.5,
-   category: randomOf(categories).name,
+   category: randomOf(categories),
    count: Math.floor(Math.random() * 20)
 }));

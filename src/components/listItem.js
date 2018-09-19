@@ -32,7 +32,7 @@ export default class HomeItem extends PureComponent {
                   <View style={styles.nameTag}>
                      {!isHome && (
                         <Text style={styles.topCategory}>
-                           {item.category.toUpperCase()}
+                           {item.category.name.toUpperCase()}
                         </Text>
                      )}
                      <Text numberOfLines={1} style={styles.name}>
@@ -43,7 +43,7 @@ export default class HomeItem extends PureComponent {
                         style={isHome ? styles.topCategory : styles.category}
                      >
                         {isHome
-                           ? item.category.toUpperCase()
+                           ? item.category.name.toUpperCase()
                            : item.lastMessage}
                      </Text>
                   </View>

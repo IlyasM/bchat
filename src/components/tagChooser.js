@@ -28,7 +28,7 @@ export class chooser extends PureComponent {
                const onPress = () => {
                   requestAnimationFrame(() => {
                      this.props.navigation.navigate("CreateWish", {
-                        category: cap(category.name)
+                        category
                      });
                   });
                };

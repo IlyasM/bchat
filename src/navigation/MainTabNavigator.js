@@ -13,12 +13,51 @@ import CreateScreen from "../screens/CreateScreen";
 import SearchScreen from "../screens/SearchScreen";
 import MessagesScreen from "../screens/MessagesScreen";
 import CreateWishScreen from "../screens/CreateWishScreen";
-const HomeStack = createStackNavigator({
-   Home: HomeScreen,
+// const HomeStack = createStackNavigator({
+//    Home: HomeScreen,
+//    Chat: MessagesScreen
+// });
+
+// HomeStack.navigationOptions = ({ navigation }) => ({
+//    tabBarLabel: "Home",
+//    tabBarIcon: ({ focused }) => (
+//       <TabBarIcon
+//          focused={focused}
+//          name={
+//             Platform.OS === "ios"
+//                ? `ios-home${focused ? "" : "-outline"}`
+//                : "md-information-circle"
+//          }
+//       />
+//    ),
+//    tabBarVisible: navigation.state.index > 0 ? false : true
+// });
+
+// const WishesStack = createStackNavigator({
+//    Wishes: WishesScreen
+// });
+
+// WishesStack.navigationOptions = {
+//    tabBarLabel: "Wishes",
+//    tabBarIcon: ({ focused }) => (
+//       <TabBarIcon
+//          focused={focused}
+//          name={
+//             Platform.OS === "ios"
+//                ? `ios-list-box${focused ? "" : "-outline"}`
+//                : "md-link"
+//          }
+//       />
+//    )
+// };
+
+const CreateStack = createStackNavigator({
+   Create: CreateScreen,
+   CreateWish: CreateWishScreen,
    Chat: MessagesScreen
 });
 
-HomeStack.navigationOptions = ({ navigation }) => ({
+CreateStack.navigationOptions = ({ navigation }) => ({
    tabBarLabel: "Home",
    tabBarIcon: ({ focused }) => (
       <TabBarIcon
@@ -26,49 +65,12 @@ HomeStack.navigationOptions = ({ navigation }) => ({
          name={
             Platform.OS === "ios"
                ? `ios-home${focused ? "" : "-outline"}`
-               : "md-information-circle"
-         }
-      />
-   ),
-   tabBarVisible: navigation.state.index > 0 ? false : true
-});
-
-const WishesStack = createStackNavigator({
-   Wishes: WishesScreen
-});
-
-WishesStack.navigationOptions = {
-   tabBarLabel: "Wishes",
-   tabBarIcon: ({ focused }) => (
-      <TabBarIcon
-         focused={focused}
-         name={
-            Platform.OS === "ios"
-               ? `ios-list-box${focused ? "" : "-outline"}`
-               : "md-link"
-         }
-      />
-   )
-};
-
-const CreateStack = createStackNavigator({
-   Create: CreateScreen,
-   CreateWish: CreateWishScreen
-});
-
-CreateStack.navigationOptions = {
-   tabBarLabel: "Create",
-   tabBarIcon: ({ focused }) => (
-      <TabBarIcon
-         focused={focused}
-         name={
-            Platform.OS === "ios"
-               ? `ios-add-circle${focused ? "" : "-outline"}`
                : "md-options"
          }
       />
-   )
-};
+   ),
+   tabBarVisible: navigation.state.index > 1 ? false : true
+});
 const ChatsStack = createStackNavigator({
    Chats: ChatsScreen,
    Chat: MessagesScreen
@@ -108,8 +110,8 @@ ProfileStack.navigationOptions = {
 
 const Tabs = createBottomTabNavigator(
    {
-      HomeStack,
-      WishesStack,
+      // HomeStack,
+      // WishesStack,
       CreateStack,
       ChatsStack,
       ProfileStack

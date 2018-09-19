@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { Text, StyleSheet, View, ScrollView, TextInput } from "react-native";
+import {
+   Text,
+   StyleSheet,
+   View,
+   ScrollView,
+   TextInput,
+   KeyboardAvoidingView
+} from "react-native";
 import Chooser from "../components/tagChooser";
 import Search from "../components/searchInput";
 import { categories } from "../fake-data";
@@ -32,15 +39,20 @@ class Create extends Component {
                query={this.props.query}
                search={this.props.search}
             />
-            <ScrollView
-               // keyboardDismissMode="none"
-               keyboardShouldPersistTaps="always"
+            <KeyboardAvoidingView
+               behavior="padding"
+               keyboardVerticalOffset={70}
             >
-               <Chooser
-                  navigation={this.props.navigation}
-                  categories={this.props.categories}
-               />
-            </ScrollView>
+               <ScrollView
+                  // keyboardDismissMode="none"
+                  keyboardShouldPersistTaps="always"
+               >
+                  <Chooser
+                     navigation={this.props.navigation}
+                     categories={this.props.categories}
+                  />
+               </ScrollView>
+            </KeyboardAvoidingView>
          </View>
       );
    }

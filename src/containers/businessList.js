@@ -9,10 +9,6 @@ import { generate } from "../fake-data";
 import { loadActions } from "../store/actions/firstActions";
 import HomeItem from "../components/listItem";
 class list extends Component {
-   componentWillMount() {
-      this.props.loadData();
-   }
-
    renderItem = ({ item }) => {
       return (
          <HomeItem
@@ -24,13 +20,13 @@ class list extends Component {
    };
    renderSeparator = () => <Separator />;
    render() {
-      if (!this.props.data) {
-         return <Loading />;
-      }
+      const { data, category } = this.props;
+
+      const source = data.filter(item => item.category.id === category.id);
       return (
          <FlatList
             style={styles.root}
-            data={this.props.data.filtered}
+            data={source}
             renderItem={this.renderItem}
             ItemSeparatorComponent={this.renderSeparator}
             keyExtractor={i => `${i.id}`}
@@ -44,7 +40,7 @@ const styles = StyleSheet.create({
    image: { borderRadius: 20, height: 40, width: 40 }
 });
 const mapStateToProps = state => {
-   return { data: state.first.data };
+   return { data: state.businesses.list };
 };
 const mapDispatchToProps = { loadData: loadActions.loadData };
 
