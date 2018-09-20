@@ -116,32 +116,6 @@ export const bizList = range(0, 100).map(i => ({
    online: Math.random() > 0.5
 }));
 
-export const generate = number => {
-   return new Promise((resolve, reject) => {
-      this.setTimeout(() => {
-         resolve({
-            lastIndex: number,
-            list: range(1, number).map(key => ({
-               id: uuid4(),
-               name: Faker.company.companyName(),
-               address:
-                  Faker.address.city() + " " + Faker.address.streetAddress(),
-               phoneNumbers: [
-                  Faker.phone.phoneNumber(),
-                  Faker.phone.phoneNumber(),
-                  Faker.phone.phoneNumber()
-               ],
-               description: Faker.lorem.sentence(),
-               image: { uri: Faker.image.avatar() },
-               category: randomOf(categories),
-               tags: randomOf(tags),
-               online: Math.random() > 0.5
-            }))
-         });
-      }, 500);
-   });
-};
-
 export const messages = () => {
    return range(0, 20)
       .map(key => ({
@@ -159,6 +133,7 @@ export const me = {
    phoneNumber: "87081914554",
    image: { uri: Faker.image.avatar() }
 };
+
 export const chats = range(0, 20).map(i => ({
    id: uuid4(),
    name: Faker.company.companyName(),
@@ -176,3 +151,25 @@ export const chats = range(0, 20).map(i => ({
    category: randomOf(categories),
    count: Math.floor(Math.random() * 20)
 }));
+
+export const replies = () =>
+   range(0, Math.floor(Math.random() * 7)).map(i => ({
+      id: uuid4(),
+      business: {
+         id: uuid4(),
+         name: Faker.company.companyName(),
+         address: Faker.address.city() + " " + Faker.address.streetAddress(),
+         phoneNumbers: [
+            Faker.phone.phoneNumber(),
+            Faker.phone.phoneNumber(),
+            Faker.phone.phoneNumber()
+         ],
+         description: Faker.lorem.sentence(),
+         image: { uri: Faker.image.avatar() },
+         lastMessage: Faker.lorem.sentence(),
+         tags: randomOf(tags),
+         online: Math.random() > 0.5,
+         category: randomOf(categories)
+      },
+      reply: Faker.lorem.sentence()
+   }));

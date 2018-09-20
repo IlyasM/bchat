@@ -91,10 +91,11 @@ ChatsStack.navigationOptions = ({ navigation }) => ({
    tabBarVisible: navigation.state.index > 0 ? false : true
 });
 const ProfileStack = createStackNavigator({
-   Profile: ProfileScreen
+   Profile: ProfileScreen,
+   Chat: MessagesScreen
 });
 
-ProfileStack.navigationOptions = {
+ProfileStack.navigationOptions = ({ navigation }) => ({
    tabBarLabel: "Профиль",
    tabBarIcon: ({ focused }) => (
       <TabBarIcon
@@ -105,8 +106,9 @@ ProfileStack.navigationOptions = {
                : "md-options"
          }
       />
-   )
-};
+   ),
+   tabBarVisible: navigation.state.index > 0 ? false : true
+});
 
 const Tabs = createBottomTabNavigator(
    {

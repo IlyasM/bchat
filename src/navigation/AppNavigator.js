@@ -2,12 +2,16 @@ import React from "react";
 import { createSwitchNavigator } from "react-navigation";
 
 import MainTabNavigator from "./MainTabNavigator";
-
-let Navigator = createSwitchNavigator({
-   // You could add another route here for authentication.
-   // Read more at https://reactnavigation.org/docs/en/auth-flow.html
-   Main: MainTabNavigator
-});
+import BusinessTabNavigator from "./BusinessTabNavigator";
+let Navigator = createSwitchNavigator(
+   {
+      // You could add another route here for authentication.
+      // Read more at https://reactnavigation.org/docs/en/auth-flow.html
+      Business: BusinessTabNavigator,
+      Main: MainTabNavigator
+   },
+   { initialRouteName: "Business" }
+);
 
 import { Provider } from "react-redux";
 import configureStore from "../store";

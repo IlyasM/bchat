@@ -10,6 +10,7 @@ import ProfileCard from "../components/profileCard";
 import IconButton from "../components/iconTextButton";
 import Icon from "react-native-vector-icons/Ionicons";
 import BroadcastList from "../containers/broadcastList";
+import Header from "../components/questionsHeader";
 const items = [
    { text: "Уведомления", iconName: "ios-notifications", color: "#BD2031" },
    // { text: "Заметки", iconName: "ios-document", color: "#22a7f0" },
@@ -33,8 +34,8 @@ export default class Profile extends Component {
       return (
          <View style={styles.container}>
             <ProfileCard />
-
-            <BroadcastList />
+            <Header />
+            <BroadcastList navigation={this.props.navigation} />
          </View>
       );
    }
@@ -43,8 +44,8 @@ export default class Profile extends Component {
 const styles = StyleSheet.create({
    container: {
       flex: 1,
-      alignItems: "center",
-      backgroundColor: "white"
+      alignItems: "center"
+      // backgroundColor: "white"
    },
    settingsIcon: {
       paddingRight: 15,

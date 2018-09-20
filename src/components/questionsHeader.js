@@ -26,7 +26,7 @@ export class componentName extends PureComponent {
 }
 const styles = StyleSheet.create({
    root: { flex: 1 },
-   header: { alignItems: "center" },
+   header: { alignItems: "center", backgroundColor: "white" },
    headerText: {
       margin: 8,
       fontSize: 17,

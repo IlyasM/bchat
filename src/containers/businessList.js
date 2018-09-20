@@ -29,15 +29,21 @@ class list extends Component {
 
    renderSeparator = () => <Separator />;
    renderHeader = () => (
-      <Question
-         category={this.props.category}
-         broadcast={() => console.log("brodcasting question")}
-      />
+      <View>
+         {this.props.category && (
+            <Question
+               category={this.props.category}
+               broadcast={() => console.log("brodcasting question")}
+            />
+         )}
+      </View>
    );
    render() {
       const { data, category } = this.props;
 
-      const source = data.filter(item => item.category.id === category.id);
+      const source = category
+         ? data.filter(item => item.category.id === category.id)
+         : data;
       return (
          <FlatList
             keyboardShouldPersistTaps="always"
