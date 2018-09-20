@@ -18,7 +18,9 @@ export default class ProfileCard extends Component {
             style={{
                backgroundColor: "white",
                padding: 10,
-               width: WIDTH
+               width: WIDTH,
+               borderBottomWidth: 0.5,
+               borderBottomColor: "rgb(200,200,200)"
             }}
          >
             <View style={styles.row}>

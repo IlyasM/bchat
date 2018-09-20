@@ -58,13 +58,13 @@ const CreateStack = createStackNavigator({
 });
 
 CreateStack.navigationOptions = ({ navigation }) => ({
-   tabBarLabel: "Home",
+   tabBarLabel: "Найти",
    tabBarIcon: ({ focused }) => (
       <TabBarIcon
          focused={focused}
          name={
             Platform.OS === "ios"
-               ? `ios-home${focused ? "" : "-outline"}`
+               ? `ios-search${focused ? "" : "-outline"}`
                : "md-options"
          }
       />
@@ -77,7 +77,7 @@ const ChatsStack = createStackNavigator({
 });
 
 ChatsStack.navigationOptions = ({ navigation }) => ({
-   tabBarLabel: "Chats",
+   tabBarLabel: "Чаты",
    tabBarIcon: ({ focused }) => (
       <TabBarIcon
          focused={focused}
@@ -95,7 +95,7 @@ const ProfileStack = createStackNavigator({
 });
 
 ProfileStack.navigationOptions = {
-   tabBarLabel: "Profile",
+   tabBarLabel: "Профиль",
    tabBarIcon: ({ focused }) => (
       <TabBarIcon
          focused={focused}
@@ -116,7 +116,7 @@ const Tabs = createBottomTabNavigator(
       ChatsStack,
       ProfileStack
    },
-   { initialRouteName: "CreateStack" }
+   { initialRouteName: "ProfileStack" }
 );
 
 export default createStackNavigator(

@@ -3,6 +3,7 @@ import {
    Button,
    StyleSheet,
    View,
+   Text,
    TextInput,
    Dimensions,
    LayoutAnimation
@@ -16,16 +17,22 @@ export default class Question extends PureComponent {
       const { textInputWidth, text, focused } = this.state;
       return (
          <View style={styles.container}>
+            <Text style={styles.text}>
+               Отправьте запрос и ожидайте отклика. Либо, выберите одного и
+               напишите сразу.
+            </Text>
             <TextInput
                ref={el => (this.ti = el)}
                clearButtonMode="while-editing"
                onChangeText={this._onChangeText}
                // value={this.props.query}
-               placeholder="Отфильтровать категории"
+               multiline
+               placeholder={this.props.category.question}
                autoCapitalize={"none"}
                placeholderTextColor={"rgb(180, 180, 180)"}
-               style={[styles.textInput, { width: textInputWidth }]}
+               style={[styles.textInput]}
             />
+            <Button onPress={this.props.broadcast} title={"Отправить"} />
          </View>
       );
    }
@@ -35,12 +42,18 @@ const styles = StyleSheet.create({
    container: {
       backgroundColor: "white",
       alignItems: "center",
-      flexDirection: "row"
+      borderBottomWidth: 0.5,
+      padding: 10,
+      paddingBottom: 2,
+      borderBottomColor: "rgb(200,200,200)"
    },
+   text: { marginBottom: 7, color: "rgb(90,90,90)", fontSize: 15 },
    textInput: {
-      height: 30,
+      height: 48,
+      fontSize: 15,
       backgroundColor: "rgb(240,240,240)",
-      margin: 10,
-      paddingLeft: 10
+      paddingHorizontal: 10,
+      paddingVertical: 5,
+      width: WIDTH
    }
 });

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, StyleSheet, View } from "react-native";
+import { Text, StyleSheet, View, KeyboardAvoidingView } from "react-native";
 import BizList from "../containers/businessList";
 import Question from "../components/question";
 export default class CreateWish extends Component {
@@ -10,8 +10,16 @@ export default class CreateWish extends Component {
       const category = this.props.navigation.getParam("category");
       return (
          <View style={styles.container}>
-            <Question />
-            <BizList category={category} navigation={this.props.navigation} />
+            <KeyboardAvoidingView
+               style={{ flex: 1 }}
+               behavior="padding"
+               keyboardVerticalOffset={65}
+            >
+               <BizList
+                  category={category}
+                  navigation={this.props.navigation}
+               />
+            </KeyboardAvoidingView>
          </View>
       );
    }

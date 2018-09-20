@@ -17,7 +17,7 @@ import Loading from "../components/Loading";
 let { store, persistor } = configureStore();
 export default class App extends React.Component {
    componentDidMount() {
-      // persistor.purge();
+      persistor.purge();
    }
    render() {
       return (
