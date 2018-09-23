@@ -75,7 +75,7 @@ const Tabs = createBottomTabNavigator(
       ChatsStack,
       SettingsStack
    },
-   { initialRouteName: "SettingsStack" }
+   { initialRouteName: "HomeStack" }
 );
 
 export default createStackNavigator(

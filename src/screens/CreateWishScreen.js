@@ -2,9 +2,13 @@ import React, { Component } from "react";
 import { Text, StyleSheet, View, KeyboardAvoidingView } from "react-native";
 import BizList from "../containers/businessList";
 import Question from "../components/question";
+import Back from "../components/backArrow";
 export default class CreateWish extends Component {
    static navigationOptions = ({ navigation }) => {
-      return { title: navigation.getParam("category").name };
+      return {
+         title: navigation.getParam("category").name,
+         headerBackImage: <Back />
+      };
    };
    render() {
       const category = this.props.navigation.getParam("category");

@@ -8,6 +8,7 @@ export default class list extends Component {
    renderItem = ({ item }) => {
       return (
          <HomeItem
+            accountMode={this.props.mode}
             mode={"chat"}
             navigation={this.props.navigation}
             item={item}
@@ -32,12 +33,3 @@ const styles = StyleSheet.create({
    root: { flex: 1 },
    image: { borderRadius: 20, height: 40, width: 40 }
 });
-// const mapStateToProps = state => {
-//    return { data: state.first.data };
-// };
-// const mapDispatchToProps = { loadData: loadActions.loadData };
-
-// export default connect(
-//    mapStateToProps,
-//    mapDispatchToProps
-// )(list);

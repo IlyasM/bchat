@@ -44,7 +44,7 @@ class list extends Component {
          <FlatList
             style={styles.root}
             horizontal
-            pagingEnabledk
+            pagingEnabled
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="always"
             data={data}

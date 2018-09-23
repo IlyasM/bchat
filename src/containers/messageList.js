@@ -43,7 +43,7 @@ class Messages extends React.Component {
    }
 
    renderItem = ({ item }) => {
-      const next = this.props.items.filter(i => i.order === item.order + 1)[0];
+      const next = this.props.items.filter(i => i.order === item.order - 1)[0];
 
       return (
          <MessageItem

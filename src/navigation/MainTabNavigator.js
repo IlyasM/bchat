@@ -95,6 +95,7 @@ const ProfileStack = createStackNavigator({
    Chat: MessagesScreen
 });
 
+import Icon from "react-native-vector-icons/Ionicons";
 ProfileStack.navigationOptions = ({ navigation }) => ({
    tabBarLabel: "Профиль",
    tabBarIcon: ({ focused }) => (
@@ -118,12 +119,13 @@ const Tabs = createBottomTabNavigator(
       ChatsStack,
       ProfileStack
    },
-   { initialRouteName: "ProfileStack" }
+   { initialRouteName: "ChatsStack" }
 );
 
-export default createStackNavigator(
+const FinalStack = createStackNavigator(
    {
       Tabs: Tabs,
+      MSN: MessagesScreen,
       Search: SearchScreen
    },
    {
@@ -131,3 +133,6 @@ export default createStackNavigator(
       headerMode: "none"
    }
 );
+
+Tabs.router = FinalStack.router;
+export default FinalStack;

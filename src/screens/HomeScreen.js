@@ -30,11 +30,7 @@ export default class HomeScreen extends React.Component {
    };
 
    render() {
-      return (
-         <View style={styles.container}>
-            <BizList navigation={this.props.navigation} />
-         </View>
-      );
+      return <View style={styles.container} />;
    }
 }
 
@@ -45,6 +41,10 @@ const styles = StyleSheet.create({
    },
    searchIcon: {
       paddingRight: 15,
+      padding: 7
+   },
+   switch: {
+      paddingLeft: 15,
       padding: 7
    }
 });

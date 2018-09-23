@@ -9,14 +9,13 @@ import {
 import FadeInImage from "./fadeImage";
 import Tag from "./tag";
 import { Badge } from "react-native-elements";
-
 const WIDTH = Dimensions.get("window").width;
 export default class HomeItem extends PureComponent {
    move = () => {
       this.props.navigation.navigate("Chat", this.props.item);
    };
    render() {
-      const { item } = this.props;
+      const { item, accountMode } = this.props;
       const isHome = this.props.mode === "home";
       return (
          <TouchableOpacity onPress={this.move} style={styles.root}>
@@ -30,11 +29,12 @@ export default class HomeItem extends PureComponent {
                   }}
                >
                   <View style={styles.nameTag}>
-                     {!isHome && (
-                        <Text style={styles.topCategory}>
-                           {item.category.name.toUpperCase()}
-                        </Text>
-                     )}
+                     {!isHome &&
+                        accountMode === "Main" && (
+                           <Text style={styles.topCategory}>
+                              {item.category.name.toUpperCase()}
+                           </Text>
+                        )}
                      <Text numberOfLines={1} style={styles.name}>
                         {item.name}
                      </Text>

@@ -48,6 +48,7 @@ class list extends Component {
          <FlatList
             keyboardShouldPersistTaps="always"
             data={source}
+            keyboardDismissMode="on-drag"
             renderItem={this.renderItem}
             ItemSeparatorComponent={this.renderSeparator}
             ListHeaderComponent={this.renderHeader}

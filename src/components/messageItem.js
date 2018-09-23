@@ -3,10 +3,10 @@ import { Text, StyleSheet, View, Dimensions } from "react-native";
 const WIDTH = Dimensions.get("window").width;
 
 let me = "#dcf8c6";
-let from = "rgb(230,230,230)";
+let from = "rgb(235,235,235)";
 
 export default ({ item, next, navigation }) => {
-   const marginTop = next && item.isMe === next.isMe ? 16 : 0;
+   const marginTop = next && item.isMe === next.isMe ? 0 : 16;
    return (
       <View
          style={[
@@ -38,12 +38,8 @@ const styles = StyleSheet.create({
       padding: 12,
       marginHorizontal: 12,
       borderRadius: 5,
-      maxWidth: WIDTH / 1.5,
-      marginBottom: 7
-      // shadowColor: "rgb(20,20,20)",
-      // shadowOffset: { height: 2, width: 1 },
-      // shadowOpacity: 0.1,
-      // shadowRadius: 5
+      marginBottom: 5,
+      maxWidth: WIDTH / 1.5
    },
    text: {
       fontSize: 16
