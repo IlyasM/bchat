@@ -14,11 +14,13 @@ export default class FadeImage extends Component {
    static hasBeenLoaded = false;
 
    _onLoad = () => {
-      Animated.timing(this.state.opacity, {
-         toValue: 1,
-         duration: 300,
-         useNativeDriver: true
-      }).start();
+      requestAnimationFrame(() => {
+         Animated.timing(this.state.opacity, {
+            toValue: 1,
+            duration: 300,
+            useNativeDriver: true
+         }).start();
+      });
    };
 
    render() {

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Text, StyleSheet, View } from "react-native";
-
-import EditReply from "../components/editReply";
+import EditReply from "../components/editReply.js";
 export default class Screen extends Component {
    render() {
       return (

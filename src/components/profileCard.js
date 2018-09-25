@@ -24,7 +24,13 @@ export default class ProfileCard extends Component {
             }}
          >
             <View style={styles.row}>
-               <TouchableOpacity>
+               <TouchableOpacity
+                  onPress={() => {
+                     this.props.navigation.navigate("PhotoViewer", {
+                        image: me.image
+                     });
+                  }}
+               >
                   <FadeInImage style={styles.image} uri={me.image.uri} />
                </TouchableOpacity>
                <View

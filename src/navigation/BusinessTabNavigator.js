@@ -11,6 +11,9 @@ import ChatsScreen from "../screens/ChatsScreen";
 import SearchScreen from "../screens/SearchScreen";
 import MessagesScreen from "../screens/MessagesScreen";
 import EditReplyScreen from "../screens/EditReplyScreen";
+import BusinessProfileScreen from "../screens/BusinessProfileScreen";
+import PhotoViewerScreen from "../screens/PhotoViewerScreen";
+import MapScreen from "../screens/MapScreen";
 const WishesStack = createStackNavigator({
    Wishes: WishesScreen,
    Chat: MessagesScreen
@@ -82,7 +85,8 @@ const Tabs = createBottomTabNavigator(
 export default createStackNavigator(
    {
       Tabs: Tabs,
-      EditReply: EditReplyScreen
+      EditReply: EditReplyScreen,
+      PhotoViewer: PhotoViewerScreen
    },
    {
       mode: "modal",

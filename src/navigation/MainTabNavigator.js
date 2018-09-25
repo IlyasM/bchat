@@ -19,10 +19,11 @@ import CreateWishScreen from "../screens/CreateWishScreen";
 
 import BusinessProfileScreen from "../screens/BusinessProfileScreen";
 import PhotoViewerScreen from "../screens/PhotoViewerScreen";
+import MapScreen from "../screens/MapScreen";
 
 const WIDTH = Dimensions.get("window").width;
 const HomeStack = createStackNavigator({
-   Home: PhotoViewerScreen,
+   Home: MapScreen,
    Chat: MessagesScreen
 });
 
@@ -87,7 +88,8 @@ const CreateStack = createStackNavigator({
    CreateWish: CreateWishScreen,
    Chat: MessagesScreen,
    Profile: ProfileScreen,
-   BusinessProfile: BusinessProfileScreen
+   BusinessProfile: BusinessProfileScreen,
+   Map: MapScreen
 });
 
 CreateStack.navigationOptions = ({ navigation }) => ({
@@ -109,7 +111,8 @@ const ChatsStack = createStackNavigator({
    Chats: ChatsScreen,
    Chat: MessagesScreen,
    Profile: ProfileScreen,
-   BusinessProfile: BusinessProfileScreen
+   BusinessProfile: BusinessProfileScreen,
+   Map: MapScreen
 });
 
 ChatsStack.navigationOptions = ({ navigation }) => ({
@@ -130,7 +133,8 @@ const RequestStack = createStackNavigator({
    Request: RequestScreen,
    Chat: MessagesScreen,
    Profile: ProfileScreen,
-   BusinessProfile: BusinessProfileScreen
+   BusinessProfile: BusinessProfileScreen,
+   Map: MapScreen
 });
 
 RequestStack.navigationOptions = ({ navigation }) => ({
@@ -163,7 +167,8 @@ const FinalStack = createStackNavigator(
    {
       Tabs: Tabs,
       MSN: MessagesScreen,
-      Search: SearchScreen
+      Search: SearchScreen,
+      PhotoViewer: PhotoViewerScreen
    },
    {
       mode: "modal",

@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
    plusWrap: {
       flex: 0.5,
       padding: 5,
-      paddingLeft: 10
+      paddingLeft: 20
    },
    buttonWrap: {
       flex: 0.6,

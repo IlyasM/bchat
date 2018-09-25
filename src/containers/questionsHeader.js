@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { actions } from "../store/actions/broadcast";
 export class componentName extends PureComponent {
    updateIndex = selectedIndex => {
-      this.props.toggle(!this.props.isActive);
+      this.props.toggle(selectedIndex === 0);
    };
    render() {
       return (

@@ -23,7 +23,6 @@ import BusinessCard from "../components/businessCard";
 class Messages extends React.Component {
    state = { statusHeight: 20 };
    statusHeightChange = height => {
-      console.log("here");
       this.setState({ statusHeight: height });
    };
    componentWillMount() {

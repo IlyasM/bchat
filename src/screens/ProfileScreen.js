@@ -17,7 +17,7 @@ export default class Profile extends Component {
    render() {
       return (
          <ScrollView contentContainerStyle={styles.container}>
-            <ProfileCard />
+            <ProfileCard navigation={this.props.navigation} />
             <View style={{ height: 40 }} />
             {items.map((item, i) => (
                <IconButton item={item} key={i} />

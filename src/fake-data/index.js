@@ -1,8 +1,7 @@
-import Faker from "faker";
+import Faker from "faker/locale/ru";
 import range from "lodash/range";
 import { uuid4 } from "fast-uuid";
 let tags = ["Посуточно", "<2000", "Недорого"];
-
 export const categories = [
    { name: "Обмен товаров", id: uuid4(), tags, question: "Есть бизнес ланч?" },
    {

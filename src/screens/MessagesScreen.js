@@ -5,7 +5,6 @@ import Back from "../components/backArrow";
 import FadeInImage from "../components/fadeImage";
 export default class MessagesScreen extends Component {
    static navigationOptions = ({ navigation }) => {
-      console.log(navigation);
       let image = navigation.getParam("image");
 
       return {
@@ -29,7 +28,14 @@ export default class MessagesScreen extends Component {
          ),
          headerBackImage: <Back />,
          headerRight: (
-            <TouchableOpacity style={styles.imageContainer}>
+            <TouchableOpacity
+               onPress={() => {
+                  navigation.navigate("PhotoViewer", {
+                     image: navigation.getParam("image")
+                  });
+               }}
+               style={styles.imageContainer}
+            >
                <FadeInImage style={styles.image} uri={image.uri} />
             </TouchableOpacity>
          )

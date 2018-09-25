@@ -79,8 +79,7 @@ const styles = StyleSheet.create({
    },
    topCategory: {
       fontSize: 12,
-      color: "rgb(130,130,140)",
-      fontFamily: "bebas"
+      color: "rgb(130,130,140)"
    },
    name: {
       fontSize: 16,
