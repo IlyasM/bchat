@@ -15,7 +15,10 @@ export default class Screen extends Component {
    render() {
       return (
          <View style={styles.container}>
-            <BusinessProfile navigation={this.props.navigation} />
+            <BusinessProfile
+               business={this.props.navigation.state.params}
+               navigation={this.props.navigation}
+            />
          </View>
       );
    }

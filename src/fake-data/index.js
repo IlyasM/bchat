@@ -104,7 +104,7 @@ export const categories = [
 
 const randomOf = lis => lis[Math.floor(Math.random() * lis.length)];
 
-let business = () => ({
+export const business = () => ({
    id: uuid4(),
    name: Faker.company.companyName(),
    address: Faker.address.city() + " " + Faker.address.streetAddress(),

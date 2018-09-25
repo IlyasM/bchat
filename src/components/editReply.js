@@ -31,14 +31,12 @@ export default class EditReply extends Component {
       const { action, item } = this.props.navigation.state.params;
       action(item, this.state.text);
       this.delayGoBack();
-      requestAnimationFrame(() => {
-         Alert.alert(
-            "Ваш ответ поступил",
-            "Пользователь возможно вам напишет",
-            [{ text: "OK", onPress: null }],
-            { cancelable: false }
-         );
-      });
+      Alert.alert(
+         "Ваш ответ поступил",
+         "Пользователь возможно вам напишет",
+         [{ text: "OK", onPress: null }],
+         { cancelable: false }
+      );
    };
    render() {
       const { action, item } = this.props.navigation.state.params;

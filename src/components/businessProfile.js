@@ -2,7 +2,6 @@ import React, { PureComponent } from "react";
 import {
    Text,
    View,
-   ScrollView,
    StyleSheet,
    TouchableOpacity,
    Dimensions
@@ -19,10 +18,7 @@ import { connectActionSheet } from "@expo/react-native-action-sheet";
 @connectActionSheet
 export default class comp extends PureComponent {
    call = () => {
-      let options = [
-         ...this.props.navigation.getParam("phoneNumbers"),
-         "Отмена"
-      ];
+      let options = [...this.props.business.phoneNumbers, "Отмена"];
       let cancelButtonIndex = options.length - 1;
       this.props.showActionSheetWithOptions(
          {
@@ -33,13 +29,13 @@ export default class comp extends PureComponent {
          buttonIndex => {
             if (buttonIndex === cancelButtonIndex) return;
             const args = { number: options[buttonIndex] };
-            call(args).catch(console.error);
+            call(args).catch(null);
          }
       );
    };
    open = () => {
       this.props.navigation.navigate("PhotoViewer", {
-         image: this.props.navigation.getParam("image")
+         image: this.props.business.image
       });
    };
    map = () => {
@@ -54,9 +50,9 @@ export default class comp extends PureComponent {
          shortDescription,
          image,
          category
-      } = this.props.navigation.state.params;
+      } = this.props.business;
       return (
-         <ScrollView contentContainerStyle={styles.scrollView}>
+         <View style={styles.view}>
             <View style={styles.row}>
                <TouchableOpacity onPress={this.call} style={styles.button}>
                   <Icon name="ios-call" color={"#3fc380"} size={30} />
@@ -74,15 +70,16 @@ export default class comp extends PureComponent {
             <Separator full />
 
             <Text style={styles.description}>{description}</Text>
-         </ScrollView>
+         </View>
       );
    }
 }
 const styles = StyleSheet.create({
-   scrollView: {
+   view: {
       backgroundColor: "white",
-      flex: 1,
-      alignItems: "center"
+      // flex: 1,
+      alignItems: "center",
+      marginBottom: 20
    },
    image: {
       height: 140,
@@ -116,6 +113,7 @@ const styles = StyleSheet.create({
    description: {
       color: "rgb(100,100,100)",
       marginHorizontal: 10,
-      margin: 10
+      margin: 10,
+      marginBottom: 16
    }
 });

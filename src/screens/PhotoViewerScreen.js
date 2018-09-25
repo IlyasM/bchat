@@ -5,7 +5,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 
 export default class Screen extends Component {
    static navigationOptions = ({ navigation }) => ({
-      gestureResponseDistance: 200
+      gestureResponseDistance: 20
    });
    render() {
       return (
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
    close: {
       position: "absolute",
       top: 20,
-      right: 20,
+      left: 20,
       padding: 5
    }
 });

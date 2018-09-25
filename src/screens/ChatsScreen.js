@@ -22,6 +22,7 @@ class Chats extends Component {
       };
    };
    render() {
+      console.log(this.props.mode);
       return (
          <View style={styles.container}>
             <ChatList

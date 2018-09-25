@@ -154,13 +154,13 @@ RequestStack.navigationOptions = ({ navigation }) => ({
 
 const Tabs = createBottomTabNavigator(
    {
-      HomeStack,
+      // HomeStack,
       // WishesStack,
       CreateStack,
       ChatsStack,
       RequestStack
    },
-   { initialRouteName: "HomeStack" }
+   { initialRouteName: "CreateStack" }
 );
 
 const FinalStack = createStackNavigator(

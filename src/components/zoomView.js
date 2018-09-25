@@ -42,6 +42,7 @@ export default class ZoomView extends Component {
    onLoad = () => {
       requestAnimationFrame(() => {
          LayoutAnimation.easeInEaseOut();
+
          this.setState({ loaded: true });
       });
    };
@@ -65,6 +66,7 @@ export default class ZoomView extends Component {
          }
       );
    }
+
    render() {
       let source = this.props.navigation.getParam("image");
       return (

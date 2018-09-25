@@ -10,7 +10,7 @@ let Navigator = createSwitchNavigator(
       Business: BusinessTabNavigator,
       Main: MainTabNavigator
    },
-   { initialRouteName: "Main" }
+   { initialRouteName: "Business" }
 );
 import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 

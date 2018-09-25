@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { Text, StyleSheet, View, ScrollView } from "react-native";
 import ProfileCard from "../components/profileCard";
-import IconButton from "../components/iconTextButton";
+
 import Back from "../components/backArrow";
+import IconButton from "../components/iconTextButton";
 const items = [
    { text: "Уведомления", iconName: "ios-notifications", color: "#BD2031" },
    { text: "Конфиденциальность", iconName: "ios-lock", color: "#f89406" }
