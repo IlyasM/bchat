@@ -13,7 +13,7 @@ import FadeInImage from "../components/fadeImage";
 import { Card, ListItem, Button, Avatar } from "react-native-elements";
 import { connect } from "react-redux";
 import { generate } from "../fake-data";
-import { loadActions } from "../store/actions/firstActions";
+import { actions } from "../store/actions/broadcast";
 import HomeItem from "../components/listItem";
 import Question from "../components/question";
 class list extends Component {
@@ -32,8 +32,9 @@ class list extends Component {
       <View>
          {this.props.category && (
             <Question
+               navigation={this.props.navigation}
                category={this.props.category}
-               broadcast={() => console.log("brodcasting question")}
+               broadcast={this.props.create}
             />
          )}
       </View>
@@ -65,7 +66,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
    return { data: state.businesses.list };
 };
-const mapDispatchToProps = { loadData: loadActions.loadData };
+const mapDispatchToProps = { create: actions.broadcast };
 
 export default connect(
    mapStateToProps,

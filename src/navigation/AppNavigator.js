@@ -10,8 +10,9 @@ let Navigator = createSwitchNavigator(
       Business: BusinessTabNavigator,
       Main: MainTabNavigator
    },
-   { initialRouteName: "Business" }
+   { initialRouteName: "Main" }
 );
+import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 
 import { Provider } from "react-redux";
 import configureStore from "../store";
@@ -21,15 +22,17 @@ import Loading from "../components/Loading";
 let { store, persistor } = configureStore();
 export default class App extends React.Component {
    componentDidMount() {
-      persistor.purge();
+      // persistor.purge();
    }
    render() {
       return (
-         <Provider store={store}>
-            <PersistGate loading={<Loading />} persistor={persistor}>
-               <Navigator />
-            </PersistGate>
-         </Provider>
+         <ActionSheetProvider>
+            <Provider store={store}>
+               <PersistGate loading={<Loading />} persistor={persistor}>
+                  <Navigator />
+               </PersistGate>
+            </Provider>
+         </ActionSheetProvider>
       );
    }
 }

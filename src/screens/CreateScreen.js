@@ -12,11 +12,12 @@ import Search from "../components/searchInput";
 import { categories } from "../fake-data";
 import { connect } from "react-redux";
 import { actions } from "../store/actions/filter";
-
+import ProfileIcon from "../containers/profileIcon";
 class Create extends Component {
    static navigationOptions = ({ navigation }) => {
       return {
-         title: "Я ищу"
+         title: "Я ищу",
+         headerRight: <ProfileIcon navigation={navigation} />
       };
    };
    componentDidMount() {

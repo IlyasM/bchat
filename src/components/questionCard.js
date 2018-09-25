@@ -8,10 +8,14 @@ import {
    Dimensions
 } from "react-native";
 const WIDTH = Dimensions.get("window").width;
+const HEIGHT = Dimensions.get("window").height;
 import ResponseList from "../containers/responseList";
 import Separator from "../components/separator";
 import { replies } from "../fake-data";
 export class QuestionCard extends PureComponent {
+   toggle = () => {
+      this.props.toggle(this.props.item, !this.props.item.active);
+   };
    render() {
       const { category, text, active } = this.props.item;
       return (
@@ -20,7 +24,7 @@ export class QuestionCard extends PureComponent {
                <Text style={styles.categoryText}>
                   {category.name.toUpperCase()}
                </Text>
-               <Switch value={active} />
+               <Switch onValueChange={this.toggle} value={active} />
             </View>
             <View
                style={{
@@ -30,7 +34,11 @@ export class QuestionCard extends PureComponent {
             >
                <Text style={styles.text}>{text}</Text>
             </View>
-            <ResponseList navigation={this.props.navigation} data={replies()} />
+            <ResponseList
+               isActive={active}
+               navigation={this.props.navigation}
+               data={replies()}
+            />
          </View>
       );
    }
@@ -41,6 +49,7 @@ const styles = StyleSheet.create({
       margin: 10,
       padding: 8,
       width: WIDTH - 20,
+      // height: HEIGHT - 140,
       backgroundColor: "white",
       borderRadius: 5
    },
@@ -51,7 +60,7 @@ const styles = StyleSheet.create({
       justifyContent: "space-between"
    },
    categoryText: { color: "rgb(120,120,120)", fontFamily: "bebas" },
-   text: { fontSize: 15, paddingTop: 8, marginBottom: 14 }
+   text: { fontSize: 16, paddingTop: 8, marginBottom: 14 }
 });
 
 export default QuestionCard;

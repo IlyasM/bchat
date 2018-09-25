@@ -5,7 +5,8 @@ import {
    Image,
    StyleSheet,
    FlatList,
-   KeyboardAvoidingView
+   KeyboardAvoidingView,
+   LayoutAnimation
 } from "react-native";
 import Loading from "../components/Loading";
 import Separator from "../components/separator";
@@ -13,46 +14,61 @@ import { connect } from "react-redux";
 import { categories } from "../fake-data";
 import { actions } from "../store/actions/broadcast";
 import QuestionCard from "../components/questionCard";
-import Header from "../components/questionsHeader";
-let data = [
-   {
-      text: "Нужно заменить масло в течение часа?",
-      active: true,
-      category: categories[9]
-   },
-   {
-      text: "Ищу квартиру на ночь сегодня",
-      active: false,
-      category: categories[1]
-   }
-];
 class list extends Component {
+   toTop = () => {
+      this.flat.scrollToOffset({
+         offset: 0,
+         animated: true
+      });
+   };
+   // componentWillUpdate() {
+   //    requestAnimationFrame(() => {
+   //       LayoutAnimation.easeInEaseOut();
+   //    });
+   // }
+   componentDidMount() {
+      this.props.navigation.addListener("willFocus", route => {
+         this.toTop();
+      });
+   }
+   componentWillUnmount() {
+      this.props.navigation.removeListener("willFocus");
+   }
+
    renderItem = ({ item }) => {
-      return <QuestionCard navigation={this.props.navigation} item={item} />;
+      return (
+         <QuestionCard
+            toggle={this.props.broadcastToggle}
+            navigation={this.props.navigation}
+            item={item}
+         />
+      );
    };
    // renderHeader = () => <Header />;
    renderSeparator = () => <Separator full />;
    renderEmpty = () => (
-      <View
-         style={{ height: 100, justifyContent: "center", alignItems: "center" }}
-      >
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
          <Text>Пока нет запросов</Text>
       </View>
    );
    render() {
+      const list = this.props.list.filter(
+         item => item.active === this.props.isActive
+      );
       return (
          <FlatList
+            ref={el => (this.flat = el)}
             style={styles.root}
             horizontal
             pagingEnabled
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="always"
-            data={data}
+            data={list}
             renderItem={this.renderItem}
             ListEmptyComponent={this.renderEmpty}
             // ListHeaderComponent={this.renderHeader}
             // ItemSeparatorComponent={this.renderSeparator}
-            keyExtractor={i => `${i.text}`}
+            keyExtractor={i => `${i.id}`}
          />
       );
    }
@@ -68,11 +84,13 @@ const styles = StyleSheet.create({
    }
 });
 const mapStateToProps = state => {
-   return { list: state.broadcast.myBroadcasts };
+   return {
+      list: state.broadcast.myBroadcasts,
+      isActive: state.broadcast.activeTab
+   };
 };
-const mapDispatchToProps = { toggle: actions.toggle };
 
 export default connect(
    mapStateToProps,
-   mapDispatchToProps
+   actions
 )(list);

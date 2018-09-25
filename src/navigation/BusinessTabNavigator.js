@@ -5,17 +5,18 @@ import {
    createBottomTabNavigator
 } from "react-navigation";
 import TabBarIcon from "../components/TabBarIcon";
-import HomeScreen from "../screens/HomeScreen";
-import ProfileScreen from "../screens/ProfileScreen";
+import WishesScreen from "../screens/WishesScreen";
+import ProfileScreen from "../screens/RequestScreen";
 import ChatsScreen from "../screens/ChatsScreen";
 import SearchScreen from "../screens/SearchScreen";
 import MessagesScreen from "../screens/MessagesScreen";
-const HomeStack = createStackNavigator({
-   Home: HomeScreen,
+import EditReplyScreen from "../screens/EditReplyScreen";
+const WishesStack = createStackNavigator({
+   Wishes: WishesScreen,
    Chat: MessagesScreen
 });
 
-HomeStack.navigationOptions = ({ navigation }) => ({
+WishesStack.navigationOptions = ({ navigation }) => ({
    tabBarLabel: "Запросы",
    tabBarIcon: ({ focused }) => (
       <TabBarIcon
@@ -71,17 +72,17 @@ SettingsStack.navigationOptions = ({ navigation }) => ({
 
 const Tabs = createBottomTabNavigator(
    {
-      HomeStack,
+      WishesStack,
       ChatsStack,
       SettingsStack
    },
-   { initialRouteName: "HomeStack" }
+   { initialRouteName: "WishesStack" }
 );
 
 export default createStackNavigator(
    {
       Tabs: Tabs,
-      Search: SearchScreen
+      EditReply: EditReplyScreen
    },
    {
       mode: "modal",

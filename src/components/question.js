@@ -10,9 +10,22 @@ import {
 } from "react-native";
 const WIDTH = Dimensions.get("window").width - 20;
 export default class Question extends PureComponent {
-   state = { textInputWidth: WIDTH };
-   _onChangeText = text => {};
+   state = { textInputWidth: WIDTH, text: "" };
+   _onChangeText = text => {
+      this.setState({ text });
+   };
+   send = () => {
+      const text = this.state.text.trim();
+      if (text === "") return;
+      this.props.broadcast(text, this.props.category);
 
+      requestAnimationFrame(() => {
+         this.setState({ text: "" }, () => {
+            this.ti.blur();
+            this.props.navigation.navigate("RequestStack");
+         });
+      });
+   };
    render() {
       const { textInputWidth, text, focused } = this.state;
       return (
@@ -25,14 +38,14 @@ export default class Question extends PureComponent {
                ref={el => (this.ti = el)}
                clearButtonMode="while-editing"
                onChangeText={this._onChangeText}
-               // value={this.props.query}
+               value={this.state.text}
                multiline
                placeholder={this.props.category.question}
-               autoCapitalize={"none"}
+               // autoCapitalize={"none"}
                placeholderTextColor={"rgb(180, 180, 180)"}
                style={[styles.textInput]}
             />
-            <Button onPress={this.props.broadcast} title={"Отправить"} />
+            <Button onPress={this.send} title={"Отправить"} />
          </View>
       );
    }

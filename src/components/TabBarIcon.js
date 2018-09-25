@@ -1,7 +1,7 @@
 import React from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import Colors from "../constants/Colors";
-
+import { TouchableOpacity } from "react-native";
 export default class TabBarIcon extends React.Component {
    render() {
       return (

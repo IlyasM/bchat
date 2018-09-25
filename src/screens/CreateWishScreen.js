@@ -7,7 +7,8 @@ export default class CreateWish extends Component {
    static navigationOptions = ({ navigation }) => {
       return {
          title: navigation.getParam("category").name,
-         headerBackImage: <Back />
+         headerBackImage: <Back />,
+         headerBackTitle: "Назад"
       };
    };
    render() {

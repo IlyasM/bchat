@@ -5,14 +5,17 @@ import { ofType } from "redux-observable";
 
 export const actions = {
    broadcast: (text, category) => ({
-      type: "BROADCAST",
+      type: "BROADCAST_CREATE",
       text,
       category
    }),
-   toggle: (text, category, flag) => ({
+   broadcastToggle: (question, flag) => ({
       type: "BROADCAST_TOGGLE",
-      text,
-      category,
+      question,
+      flag
+   }),
+   broadcastTabToggle: flag => ({
+      type: "BROADCAST_TAB_TOGGLE",
       flag
    })
 };

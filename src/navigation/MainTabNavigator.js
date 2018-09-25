@@ -1,37 +1,45 @@
 import React from "react";
-import { Platform } from "react-native";
+import { Platform, Dimensions } from "react-native";
 import {
    createStackNavigator,
-   createBottomTabNavigator
+   createBottomTabNavigator,
+   createDrawerNavigator
 } from "react-navigation";
 import TabBarIcon from "../components/TabBarIcon";
 import HomeScreen from "../screens/HomeScreen";
+import RequestScreen from "../screens/RequestScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+
 import WishesScreen from "../screens/WishesScreen";
 import ChatsScreen from "../screens/ChatsScreen";
 import CreateScreen from "../screens/CreateScreen";
 import SearchScreen from "../screens/SearchScreen";
 import MessagesScreen from "../screens/MessagesScreen";
 import CreateWishScreen from "../screens/CreateWishScreen";
-// const HomeStack = createStackNavigator({
-//    Home: HomeScreen,
-//    Chat: MessagesScreen
-// });
 
-// HomeStack.navigationOptions = ({ navigation }) => ({
-//    tabBarLabel: "Home",
-//    tabBarIcon: ({ focused }) => (
-//       <TabBarIcon
-//          focused={focused}
-//          name={
-//             Platform.OS === "ios"
-//                ? `ios-home${focused ? "" : "-outline"}`
-//                : "md-information-circle"
-//          }
-//       />
-//    ),
-//    tabBarVisible: navigation.state.index > 0 ? false : true
-// });
+import BusinessProfileScreen from "../screens/BusinessProfileScreen";
+import PhotoViewerScreen from "../screens/PhotoViewerScreen";
+
+const WIDTH = Dimensions.get("window").width;
+const HomeStack = createStackNavigator({
+   Home: PhotoViewerScreen,
+   Chat: MessagesScreen
+});
+
+HomeStack.navigationOptions = ({ navigation }) => ({
+   tabBarLabel: "Home",
+   tabBarIcon: ({ focused }) => (
+      <TabBarIcon
+         focused={focused}
+         name={
+            Platform.OS === "ios"
+               ? `ios-home${focused ? "" : "-outline"}`
+               : "md-information-circle"
+         }
+      />
+   ),
+   tabBarVisible: navigation.state.index > 0 ? false : true
+});
 
 // const WishesStack = createStackNavigator({
 //    Wishes: WishesScreen
@@ -50,11 +58,36 @@ import CreateWishScreen from "../screens/CreateWishScreen";
 //       />
 //    )
 // };
+// const WithProfile = createDrawerNavigator(
+//    {
+//       FinalStack
+//    },
+//    {
+//       contentComponent: MessagesScreen,
+//       drawerPosition: "right",
+//       drawerWidth: WIDTH - 48
+//    }
+// );
+// const DrawMessage = createDrawerNavigator(
+//    { MessagesScreen },
+//    {
+//       contentComponent: ProfileScreen,
+//       drawerPosition: "right",
+//       drawerWidth: WIDTH - 48
+//    }
+// );
+// DrawMessage.navigationOptions = ({ navigation }) => {
+//    return {
+//       title: navigation.getParam("name")
+//    };
+// };
 
 const CreateStack = createStackNavigator({
    Create: CreateScreen,
    CreateWish: CreateWishScreen,
-   Chat: MessagesScreen
+   Chat: MessagesScreen,
+   Profile: ProfileScreen,
+   BusinessProfile: BusinessProfileScreen
 });
 
 CreateStack.navigationOptions = ({ navigation }) => ({
@@ -71,9 +104,12 @@ CreateStack.navigationOptions = ({ navigation }) => ({
    ),
    tabBarVisible: navigation.state.index > 1 ? false : true
 });
+
 const ChatsStack = createStackNavigator({
    Chats: ChatsScreen,
-   Chat: MessagesScreen
+   Chat: MessagesScreen,
+   Profile: ProfileScreen,
+   BusinessProfile: BusinessProfileScreen
 });
 
 ChatsStack.navigationOptions = ({ navigation }) => ({
@@ -90,20 +126,21 @@ ChatsStack.navigationOptions = ({ navigation }) => ({
    ),
    tabBarVisible: navigation.state.index > 0 ? false : true
 });
-const ProfileStack = createStackNavigator({
+const RequestStack = createStackNavigator({
+   Request: RequestScreen,
+   Chat: MessagesScreen,
    Profile: ProfileScreen,
-   Chat: MessagesScreen
+   BusinessProfile: BusinessProfileScreen
 });
 
-import Icon from "react-native-vector-icons/Ionicons";
-ProfileStack.navigationOptions = ({ navigation }) => ({
-   tabBarLabel: "Профиль",
+RequestStack.navigationOptions = ({ navigation }) => ({
+   tabBarLabel: "Мои запросы",
    tabBarIcon: ({ focused }) => (
       <TabBarIcon
          focused={focused}
          name={
             Platform.OS === "ios"
-               ? `ios-person${focused ? "" : "-outline"}`
+               ? `ios-list-box${focused ? "" : "-outline"}`
                : "md-options"
          }
       />
@@ -113,13 +150,13 @@ ProfileStack.navigationOptions = ({ navigation }) => ({
 
 const Tabs = createBottomTabNavigator(
    {
-      // HomeStack,
+      HomeStack,
       // WishesStack,
       CreateStack,
       ChatsStack,
-      ProfileStack
+      RequestStack
    },
-   { initialRouteName: "ChatsStack" }
+   { initialRouteName: "HomeStack" }
 );
 
 const FinalStack = createStackNavigator(
@@ -134,5 +171,4 @@ const FinalStack = createStackNavigator(
    }
 );
 
-Tabs.router = FinalStack.router;
 export default FinalStack;

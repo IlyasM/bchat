@@ -9,6 +9,7 @@ class Chats extends Component {
    static navigationOptions = ({ navigation }) => {
       return {
          title: "Чаты",
+         headerBackTitle: "Назад",
          headerRight: (
             <TouchableOpacity
                style={styles.searchIcon}

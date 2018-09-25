@@ -5,7 +5,8 @@ import {
    View,
    TextInput,
    TouchableOpacity,
-   LayoutAnimation
+   LayoutAnimation,
+   Platform
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { window } from "../constants/Layout";
@@ -14,16 +15,83 @@ import { connect } from "react-redux";
 import { uuid4 } from "fast-uuid";
 import Colors from "../constants/Colors";
 const color = "rgb(180,180,180)";
+import { faq } from "../fake-data";
+
+import { Constants, Location, Permissions, Camera } from "expo";
+import { connectActionSheet } from "@expo/react-native-action-sheet";
+@connectActionSheet
 export default class MessageInput extends React.PureComponent {
    state = {
       text: "",
       height: 30,
-      showSlider: false
+      showSlider: false,
+      hasCameraPermission: null,
+      type: Camera.Constants.Type.back
+   };
+   _onOpenActionSheet = () => {
+      // Same interface as https://facebook.github.io/react-native/docs/actionsheetios.html
+      let options = [
+         "Выбрать фото из галерии",
+         "Открыть камеру",
+         "Поделиться геолокацией",
+         "Отмена"
+      ];
+      let cancelButtonIndex = 3;
+
+      this.props.showActionSheetWithOptions(
+         {
+            options,
+            cancelButtonIndex,
+            title: "Прикрепить"
+            // destructiveButtonIndex
+         },
+         buttonIndex => {
+            switch (buttonIndex) {
+               case 2:
+                  this._getLocationAsync();
+               case 1:
+                  this._camera();
+               default:
+                  console.log("nope");
+            }
+            // Do something here depending on the button index selected
+         }
+      );
    };
 
-   _showActionSheet = () => {
-      this.ActionSheet.show();
+   _getLocationAsync = async () => {
+      let { status } = await Permissions.askAsync(Permissions.LOCATION);
+      if (status !== "granted") {
+         this.setState({
+            errorMessage: "Permission to access location was denied"
+         });
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      console.log(location);
+      this.setState({ location });
    };
+   _camera = async () => {
+      const { status } = await Permissions.askAsync(Permissions.CAMERA);
+      this.setState({ hasCameraPermission: status === "granted" });
+   };
+   _faq = () => {
+      let options = [...faq, "Отмена"];
+      let cancelButtonIndex = options.length;
+      this.props.showActionSheetWithOptions(
+         {
+            options,
+            cancelButtonIndex,
+            title: "Часто задаваемые вопросы"
+            // destructiveButtonIndex
+         },
+         buttonIndex => {
+            console.log(options[buttonIndex]);
+            // Do something here depending on the button index selected
+         }
+      );
+   };
+
    _onChangeText = text => {
       LayoutAnimation.easeInEaseOut();
       this.setState({
@@ -39,7 +107,6 @@ export default class MessageInput extends React.PureComponent {
 
    _onSend = () => {
       if (this.state.text.trim() === "") {
-         this._showActionSheet();
          return;
       }
       const message = {
@@ -52,14 +119,16 @@ export default class MessageInput extends React.PureComponent {
       this.setState(state => ({ text: "" }));
    };
    renderSendButton = () => {
-      return this.state.text.trim() === "" ? (
+      return (
          <Ionicons
-            name={"ios-arrow-dropup"}
-            size={26}
-            color={Colors.tintColor}
+            name={"ios-send"}
+            size={32}
+            color={
+               this.state.text.trim() === ""
+                  ? "rgb(170,170,170)"
+                  : Colors.tintColor
+            }
          />
-      ) : (
-         <Ionicons name={"ios-send"} size={32} color={Colors.tintColor} />
       );
    };
 
@@ -71,7 +140,10 @@ export default class MessageInput extends React.PureComponent {
                { height: Math.min(Math.max(48, this.state.height + 14), 158) }
             ]}
          >
-            <TouchableOpacity style={styles.plusWrap}>
+            <TouchableOpacity
+               onPress={this._onOpenActionSheet}
+               style={styles.plusWrap}
+            >
                <Ionicons
                   name={"ios-attach"}
                   size={30}
@@ -95,22 +167,6 @@ export default class MessageInput extends React.PureComponent {
             <TouchableOpacity onPress={this._onSend} style={styles.buttonWrap}>
                {this.renderSendButton()}
             </TouchableOpacity>
-            <ActionSheet
-               ref={o => (this.ActionSheet = o)}
-               title={"Выберите быстрое действие"}
-               options={[
-                  "Забронировать столик",
-                  "Меню бизнес ланча",
-                  "Добрый день!",
-                  "Хорошего дня",
-                  "Отмена"
-               ]}
-               cancelButtonIndex={4}
-               destructiveButtonIndex={5}
-               onPress={index => {
-                  /* do something */
-               }}
-            />
          </View>
       );
    }

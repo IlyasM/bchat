@@ -1,3 +1,5 @@
+import { uuid4 } from "fast-uuid";
+
 type Question = {
    text: String,
    category: Object,
@@ -7,30 +9,42 @@ type Question = {
 type State = { myBroadcasts: [Question] };
 
 const init: State = {
-   myBroadcasts: []
+   myBroadcasts: [],
+   activeTab: true
 };
 export default (state = init, action) => {
    switch (action.type) {
-      case "BROADCAST":
+      case "BROADCAST_CREATE":
          return {
+            activeTab: true,
             myBroadcasts: [
-               { text: action.text, category: action.category, active: true },
-               ...state.myBroadcasts
-            ]
-         };
-      case "TOGGLE":
-         const toReturn = state.myBroadcasts.filter(
-            b => b.text !== action.text
-         );
-         return {
-            myBroadcasts: [
-               ...toReturn,
                {
                   text: action.text,
                   category: action.category,
-                  active: action.flag
-               }
+                  active: true,
+                  id: uuid4()
+               },
+               ...state.myBroadcasts
             ]
+         };
+      case "BROADCAST_TOGGLE":
+         const toReturn = state.myBroadcasts.filter(
+            b => b.id !== action.question.id
+         );
+         return {
+            ...state,
+            myBroadcasts: [
+               {
+                  ...action.question,
+                  active: action.flag
+               },
+               ...toReturn
+            ]
+         };
+      case "BROADCAST_TAB_TOGGLE":
+         return {
+            ...state,
+            activeTab: action.flag
          };
       default:
          return state;

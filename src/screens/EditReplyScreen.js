@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { Text, StyleSheet, View } from "react-native";
-import WishList from "../containers/wishList";
-export default class Wishes extends Component {
+
+import EditReply from "../components/editReply";
+export default class Screen extends Component {
    render() {
       return (
          <View style={styles.container}>
-            <WishList navigation={this.props.navigation} />
+            <EditReply navigation={this.props.navigation} />
          </View>
       );
    }
@@ -14,6 +15,6 @@ export default class Wishes extends Component {
 const styles = StyleSheet.create({
    container: {
       flex: 1,
-      alignItems: "center"
+      backgroundColor: "white"
    }
 });
