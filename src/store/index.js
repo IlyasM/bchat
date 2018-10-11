@@ -9,7 +9,15 @@ import rootEpic from "./rootEpic";
 const persistConfig = {
    key: "root",
    storage,
-   blacklist: ["first", "messages", "filter", "businesses", "accountMode"]
+   blacklist: [
+      "first",
+      "messages",
+      "filter",
+      "businesses",
+      "accountMode",
+      "data",
+      "identity"
+   ]
    //   whitelist: ["auth"]
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);

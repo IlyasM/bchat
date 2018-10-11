@@ -3,6 +3,7 @@ import { Text, StyleSheet, View, KeyboardAvoidingView } from "react-native";
 import BizList from "../containers/businessList";
 import Question from "../components/question";
 import Back from "../components/backArrow";
+
 export default class CreateWish extends Component {
    static navigationOptions = ({ navigation }) => {
       return {

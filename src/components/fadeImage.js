@@ -7,12 +7,15 @@ import {
    Animated,
    LayoutAnimation
 } from "react-native";
+import randomColor from "randomcolor";
 export default class FadeImage extends Component {
    state = {
       opacity: new Animated.Value(0)
    };
    static hasBeenLoaded = false;
-
+   // componentDidMount() {
+   //    this.color = randomColor({ luminosity: "light" });
+   // }
    _onLoad = () => {
       requestAnimationFrame(() => {
          Animated.timing(this.state.opacity, {
@@ -24,6 +27,7 @@ export default class FadeImage extends Component {
    };
 
    render() {
+      const color = randomColor();
       return (
          <View>
             <Animated.Image
@@ -47,7 +51,7 @@ export default class FadeImage extends Component {
                style={[
                   styles.placeholder,
                   {
-                     backgroundColor: "rgb(200,200,200)",
+                     backgroundColor: color,
                      opacity: this.state.opacity.interpolate({
                         inputRange: [0, 0.5],
                         outputRange: [1, 0]

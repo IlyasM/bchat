@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, LayoutAnimation } from "react-native";
 import Tag from "./tag";
 import { cap } from "../constants/utils";
 
-export class chooser extends PureComponent {
+export class Chooser extends PureComponent {
    componentWillUpdate() {
       LayoutAnimation.easeInEaseOut();
    }
@@ -43,4 +43,4 @@ const styles = StyleSheet.create({
    root: { flexDirection: "row", flexWrap: "wrap", justifyContent: "center" }
 });
 
-export default chooser;
+export default Chooser;

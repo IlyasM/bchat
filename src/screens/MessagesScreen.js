@@ -36,7 +36,7 @@ export default class MessagesScreen extends Component {
                }}
                style={styles.imageContainer}
             >
-               <FadeInImage style={styles.image} uri={image.uri} />
+               <FadeInImage style={styles.image} uri={image && image.uri} />
             </TouchableOpacity>
          )
       };

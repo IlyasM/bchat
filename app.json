@@ -25,9 +25,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.bchat",
       "infoPlist": {
-        
          "NSCameraUsageDescription": "lol asking for camera"
-
        }
     }
   }

@@ -10,15 +10,13 @@ import FadeInImage from "./fadeImage";
 import Tag from "./tag";
 import { Badge } from "react-native-elements";
 const WIDTH = Dimensions.get("window").width;
-import { connect } from "react-redux";
 
-class HomeItem extends PureComponent {
+export default class HomeItem extends PureComponent {
    move = () => {
       this.props.navigation.navigate("Chat", this.props.item);
    };
    render() {
       const { item, accountMode } = this.props;
-      if (!item) return null;
       return (
          <TouchableOpacity onPress={this.move} style={styles.root}>
             <View style={styles.row}>
@@ -34,30 +32,21 @@ class HomeItem extends PureComponent {
                   }}
                >
                   <View style={styles.nameTag}>
-                     {item.category && (
-                        <Text style={styles.topCategory}>
-                           {item.category.name.toUpperCase()}
-                        </Text>
-                     )}
                      <Text numberOfLines={1} style={styles.name}>
                         {item.name}
                      </Text>
-                     <Text numberOfLines={2} style={styles.category}>
-                        {item.last && item.last.text}
+                     <Text numberOfLines={2} style={styles.topCategoryy}>
+                        {item.category.name.toUpperCase()}
                      </Text>
                   </View>
                </View>
             </View>
-
-            {item.count > 0 && <Badge value={item.count} />}
+            {item.online && <View style={styles.dot} />}
          </TouchableOpacity>
       );
    }
 }
-const mapState = (state, props) => {
-   return { item: state.data.chats.byIds[props.chatId] };
-};
-export default connect(mapState)(HomeItem);
+
 const styles = StyleSheet.create({
    root: {
       flexDirection: "row",

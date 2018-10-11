@@ -38,6 +38,6 @@ export default class Screen extends Component {
 
 const styles = StyleSheet.create({
    container: {
-      flex: 1
+      marginBottom: 10
    }
 });

@@ -1,11 +1,18 @@
 import React, { Component } from "react";
 import { Text, StyleSheet, View } from "react-native";
-import EditReply from "../components/editReply.js";
+import BusinessEdit from "../components/businessEdit";
+import Back from "../components/backArrow";
 export default class Screen extends Component {
+   static navigationOptions = ({ navigation }) => {
+      return {
+         title: "Редактировать",
+         headerBackImage: <Back />
+      };
+   };
    render() {
       return (
          <View style={styles.container}>
-            <EditReply />
+            <BusinessEdit />
          </View>
       );
    }
@@ -13,7 +20,6 @@ export default class Screen extends Component {
 
 const styles = StyleSheet.create({
    container: {
-      flex: 1,
-      backgroundColor: "white"
+      flex: 1
    }
 });

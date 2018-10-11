@@ -8,11 +8,22 @@ import {
 } from "react-native";
 const WIDTH = Dimensions.get("window").width;
 import Icon from "react-native-vector-icons/Ionicons";
+import { withNavigation } from "react-navigation";
+@withNavigation
 export default class IconTextButton extends PureComponent {
+   go = () => {
+      const go = this.props.navigation.navigate;
+      switch (this.props.item.text) {
+         case "Редактировать":
+            go("BusinessEdit");
+         case "Конфиденциальность":
+      }
+   };
    render() {
       const { text, iconName, color } = this.props.item;
+
       return (
-         <TouchableOpacity style={styles.root}>
+         <TouchableOpacity onPress={this.go} style={styles.root}>
             <View style={styles.row}>
                <View style={styles.iconContainer}>
                   <Icon name={iconName} size={20} color={color} />

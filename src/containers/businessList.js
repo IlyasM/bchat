@@ -13,18 +13,16 @@ import FadeInImage from "../components/fadeImage";
 import { Card, ListItem, Button, Avatar } from "react-native-elements";
 import { connect } from "react-redux";
 import { generate } from "../fake-data";
-import { actions } from "../store/actions/broadcast";
-import HomeItem from "../components/listItem";
+import { actions as broad } from "../store/actions/broadcast";
+import { actions as biz } from "../store/actions/businesses";
+import HomeItem from "../components/listHomeItem";
 import Question from "../components/question";
 class list extends Component {
+   componentDidMount() {
+      this.props.fetch(this.props.category.id);
+   }
    renderItem = ({ item }) => {
-      return (
-         <HomeItem
-            mode={"home"}
-            navigation={this.props.navigation}
-            item={item}
-         />
-      );
+      return <HomeItem navigation={this.props.navigation} item={item} />;
    };
 
    renderSeparator = () => <Separator />;
@@ -42,19 +40,16 @@ class list extends Component {
    render() {
       const { data, category } = this.props;
 
-      const source = category
-         ? data.filter(item => item.category.id === category.id)
-         : data;
       return (
          <FlatList
             keyboardShouldPersistTaps="always"
-            data={source}
+            data={data}
             keyboardDismissMode="on-drag"
             renderItem={this.renderItem}
             ItemSeparatorComponent={this.renderSeparator}
             ListHeaderComponent={this.renderHeader}
             keyExtractor={i => `${i.id}`}
-            stickyHeaderIndices={[0]}
+            // stickyHeaderIndices={[0]}
          />
       );
    }
@@ -66,7 +61,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
    return { data: state.businesses.list };
 };
-const mapDispatchToProps = { create: actions.broadcast };
+const mapDispatchToProps = { create: broad.broadcast, fetch: biz.fetch };
 
 export default connect(
    mapStateToProps,

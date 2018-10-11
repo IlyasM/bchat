@@ -83,6 +83,8 @@ class Messages extends React.Component {
                style={{ paddingVertical: 10 }}
                // refreshing={this.state.isRefreshing}
                // keyboardDismissMode="on-drag"
+               removeClippedSubviews
+               windowSize={31}
                onRefresh={this.handleRefresh}
                onEndReached={this.handleLoadMore}
                onEndThreshold={0}

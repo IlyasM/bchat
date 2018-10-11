@@ -3,14 +3,16 @@ import { createSwitchNavigator } from "react-navigation";
 
 import MainTabNavigator from "./MainTabNavigator";
 import BusinessTabNavigator from "./BusinessTabNavigator";
+import AuthScreen from "../screens/AuthScreen";
 let Navigator = createSwitchNavigator(
    {
       // You could add another route here for authentication.
       // Read more at https://reactnavigation.org/docs/en/auth-flow.html
+      Auth: AuthScreen,
       Business: BusinessTabNavigator,
       Main: MainTabNavigator
    },
-   { initialRouteName: "Business" }
+   { initialRouteName: "Auth" }
 );
 import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 
@@ -22,7 +24,7 @@ import Loading from "../components/Loading";
 let { store, persistor } = configureStore();
 export default class App extends React.Component {
    componentDidMount() {
-      // persistor.purge();
+      persistor.purge();
    }
    render() {
       return (

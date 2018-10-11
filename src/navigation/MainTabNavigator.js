@@ -16,14 +16,14 @@ import CreateScreen from "../screens/CreateScreen";
 import SearchScreen from "../screens/SearchScreen";
 import MessagesScreen from "../screens/MessagesScreen";
 import CreateWishScreen from "../screens/CreateWishScreen";
-
+import TestScreen from "../screens/testScreen";
 import BusinessProfileScreen from "../screens/BusinessProfileScreen";
 import PhotoViewerScreen from "../screens/PhotoViewerScreen";
 import MapScreen from "../screens/MapScreen";
 
 const WIDTH = Dimensions.get("window").width;
 const HomeStack = createStackNavigator({
-   Home: MapScreen,
+   Home: TestScreen,
    Chat: MessagesScreen
 });
 
@@ -104,7 +104,8 @@ CreateStack.navigationOptions = ({ navigation }) => ({
          }
       />
    ),
-   tabBarVisible: navigation.state.index > 1 ? false : true
+   tabBarVisible: navigation.state.index > 0 ? false : true,
+   animationEnabled: true
 });
 
 const ChatsStack = createStackNavigator({

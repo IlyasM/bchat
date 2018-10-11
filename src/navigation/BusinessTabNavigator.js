@@ -1,5 +1,5 @@
 import React from "react";
-import { Platform, TouchableOpacity } from "react-native";
+import { Platform } from "react-native";
 import {
    createStackNavigator,
    createBottomTabNavigator
@@ -15,12 +15,14 @@ import BusinessProfileScreen from "../screens/BusinessProfileScreen";
 import PhotoViewerScreen from "../screens/PhotoViewerScreen";
 import MapScreen from "../screens/MapScreen";
 import BusinessSettingsScreen from "../screens/BusinessSettingsScreen";
+import BusinessEditScreen from "../screens/BusinessEditScreen";
+
 const WishesStack = createStackNavigator({
-   Wishes: WishesScreen
-   // Chat: MessagesScreen
+   Wishes: WishesScreen,
+   Chat: MessagesScreen
 });
 
-WishesScreen.navigationOptions = ({ navigation }) => ({
+WishesStack.navigationOptions = ({ navigation }) => ({
    tabBarLabel: "Запросы",
    tabBarIcon: ({ focused }) => (
       <TabBarIcon
@@ -32,16 +34,16 @@ WishesScreen.navigationOptions = ({ navigation }) => ({
          }
       />
    ),
-   tabBarVisible: navigation.state.index > 0 ? false : true
+   tabBarVisible: navigation.state.index > 0 ? false : true,
+   animationEnabled: true
 });
 
 const ChatsStack = createStackNavigator({
-   Chats: ChatsScreen
-   // Chat: MessagesScreen
+   Chats: ChatsScreen,
+   Chat: MessagesScreen
 });
 
-ChatsScreen.navigationOptions = ({ navigation }) => ({
-   title: "Чаты",
+ChatsStack.navigationOptions = ({ navigation }) => ({
    tabBarLabel: "Чаты",
    tabBarIcon: ({ focused }) => (
       <TabBarIcon
@@ -55,13 +57,11 @@ ChatsScreen.navigationOptions = ({ navigation }) => ({
    ),
    tabBarVisible: navigation.state.index > 0 ? false : true
 });
-const SettingsStack = createStackNavigator(
-   {
-      BusinessSettings: BusinessSettingsScreen,
-      Map: MapScreen
-   },
-   { headerMode: "none" }
-);
+const SettingsStack = createStackNavigator({
+   BusinessSettings: BusinessSettingsScreen,
+   Map: MapScreen,
+   BusinessEdit: BusinessEditScreen
+});
 
 SettingsStack.navigationOptions = ({ navigation }) => ({
    tabBarLabel: "Настройки",
@@ -75,58 +75,21 @@ SettingsStack.navigationOptions = ({ navigation }) => ({
          }
       />
    ),
-   tabBarVisible: navigation.state.index > 0 ? false : true
+   tabBarVisible: navigation.state.index > 2 ? false : true
 });
 
 const Tabs = createBottomTabNavigator(
    {
-      "Люди спрашивают": WishesScreen,
-      Чаты: ChatsScreen,
+      WishesStack,
+      ChatsStack,
       SettingsStack
    },
-   { initialRouteName: "SettingsStack" }
+   { initialRouteName: "WishesStack" }
 );
 
-import SearchIcon from "../components/searchIcon";
-import SwitchButton from "../containers/switchButton";
-Tabs.navigationOptions = ({ navigation }) => {
-   const { routeName } = navigation.state.routes[navigation.state.index];
-
-   // You can do whatever you like here to pick the title based on the route name
-   const headerTitle = routeName;
-   const headerBackTitle = "Назад";
-   let headerRight, headerLeft;
-   switch (routeName) {
-      case "Чаты":
-         headerRight = <SearchIcon navigation={navigation} />;
-         headerLeft = <SwitchButton navigation={navigation} />;
-      case "Other":
-         headerRight = <SearchIcon navigation={navigation} />;
-         headerLeft = <SwitchButton navigation={navigation} />;
-   }
-
-   return {
-      headerTitle,
-      headerBackTitle,
-      headerRight,
-      headerLeft
-   };
-};
-
-const withChat = createStackNavigator(
-   {
-      Tabs: Tabs,
-
-      Chat: MessagesScreen
-   },
-   {
-      // mode: "modal",
-      // headerMode: "none"
-   }
-);
 export default createStackNavigator(
    {
-      WithChat: withChat,
+      Tabs: Tabs,
       EditReply: EditReplyScreen,
       PhotoViewer: PhotoViewerScreen
    },

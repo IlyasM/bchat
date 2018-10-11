@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
    close: {
       position: "absolute",
       top: 20,
-      left: 20,
+      right: 20,
       padding: 5
    }
 });

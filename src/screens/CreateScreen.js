@@ -13,6 +13,7 @@ import { categories } from "../fake-data";
 import { connect } from "react-redux";
 import { actions } from "../store/actions/filter";
 import ProfileIcon from "../containers/profileIcon";
+import Loading from "../components/Loading";
 class Create extends Component {
    static navigationOptions = ({ navigation }) => {
       return {
@@ -44,15 +45,16 @@ class Create extends Component {
                behavior="padding"
                keyboardVerticalOffset={70}
             >
-               <ScrollView
-                  // keyboardDismissMode="none"
-                  keyboardShouldPersistTaps="always"
-               >
-                  <Chooser
-                     navigation={this.props.navigation}
-                     categories={this.props.categories}
-                  />
-               </ScrollView>
+               {this.props.loading ? (
+                  <Loading />
+               ) : (
+                  <ScrollView keyboardShouldPersistTaps="always">
+                     <Chooser
+                        navigation={this.props.navigation}
+                        categories={this.props.categories}
+                     />
+                  </ScrollView>
+               )}
             </KeyboardAvoidingView>
          </View>
       );
@@ -68,7 +70,11 @@ const styles = StyleSheet.create({
    textInput: { height: 30, width: 200, paddingLeft: 10 }
 });
 const mapStateToProps = state => {
-   return { categories: state.filter.results, query: state.filter.query };
+   return {
+      categories: state.filter.results,
+      query: state.filter.query,
+      loading: state.identity.loading
+   };
 };
 const mapDispatchToProps = { search: actions.filter };
 
