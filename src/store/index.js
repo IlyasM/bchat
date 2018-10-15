@@ -11,7 +11,6 @@ const persistConfig = {
    storage,
    blacklist: [
       "first",
-      "messages",
       "filter",
       "businesses",
       "accountMode",

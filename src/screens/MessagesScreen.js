@@ -6,7 +6,6 @@ import FadeInImage from "../components/fadeImage";
 export default class MessagesScreen extends Component {
    static navigationOptions = ({ navigation }) => {
       let image = navigation.getParam("image");
-
       return {
          headerTitle: (
             <TouchableOpacity
@@ -43,9 +42,13 @@ export default class MessagesScreen extends Component {
    };
 
    render() {
+      const params = this.props.navigation.state.params;
+      const to = params.category
+         ? `business:${params.id}`
+         : `user:${params.id}`;
       return (
          <View style={styles.container}>
-            <MessageList navigation={this.props.navigation} />
+            <MessageList to={to} navigation={this.props.navigation} />
          </View>
       );
    }

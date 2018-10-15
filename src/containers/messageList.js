@@ -17,38 +17,46 @@ import StatusBarHeight from "@expo/status-bar-height";
 import MessageItem from "../components/messageItem";
 import MessageInput from "../components/messageInput";
 import { connect } from "react-redux";
+import { actions as messaging } from "../store/actions/messaging";
 import Colors from "../constants/Colors";
 import Loading from "../components/Loading";
 import BusinessCard from "../components/businessCard";
+import { DangerZone } from "expo";
+const { Localization } = DangerZone;
 class Messages extends React.Component {
-   state = { statusHeight: 20 };
-   statusHeightChange = height => {
-      this.setState({ statusHeight: height });
-   };
+   state = { statusHeight: 20, currentTimeZone: null };
    componentWillMount() {
-      StatusBarManager.getHeight(statusBarHeight => {
-         requestAnimationFrame(() => {
-            this.setState({ statusHeight: statusBarHeight.height });
-         });
-      });
+      // StatusBarManager.getHeight(statusBarHeight => {
+      //    requestAnimationFrame(() => {
+      //       this.setState({ statusHeight: statusBarHeight.height });
+      //    });
+      // });
       // StatusBarHeight.addEventListener(this.statusHeightChange);
    }
    componentWillUnmount() {
       // StatusBarHeight.removeEventListener(this.statusHeightChange);
    }
+   async componentDidMount() {
+      this.props.setRoute(this.props.to);
+   }
 
    componentWillUpdate() {
       LayoutAnimation.easeInEaseOut();
    }
+   componentWillUnmount() {
+      this.props.setRoute();
+   }
 
-   renderItem = ({ item }) => {
-      const next = this.props.items.filter(i => i.order === item.order - 1)[0];
+   renderItem = ({ item, index }) => {
+      const previous = this.props.chat.events[index - 1];
 
       return (
          <MessageItem
             navigation={this.props.navigation}
             item={item}
-            next={next}
+            timeZone={this.state.currentTimeZone}
+            previous={previous}
+            myId={this.props.myId}
          />
       );
    };
@@ -69,7 +77,8 @@ class Messages extends React.Component {
    };
 
    render() {
-      const { items, loading } = this.props;
+      const { items, loading, to, chat, push, myId, typing } = this.props;
+      // console.log("in render", chat);
       return (
          <KeyboardAvoidingView
             keyboardVerticalOffset={this.state.statusHeight > 20 ? 84 : 64}
@@ -77,7 +86,7 @@ class Messages extends React.Component {
             style={styles.root}
          >
             <FlatList
-               data={items}
+               data={chat.events}
                renderItem={this.renderItem}
                inverted
                style={{ paddingVertical: 10 }}
@@ -88,12 +97,18 @@ class Messages extends React.Component {
                onRefresh={this.handleRefresh}
                onEndReached={this.handleLoadMore}
                onEndThreshold={0}
-               keyExtractor={i => i.id}
+               keyExtractor={i => `${i.id}`}
                scrollsToTop={false}
                ListFooterComponent={this.renderFooter}
                EmptyListComponent={() => this.renderEmpty()}
             />
-            <MessageInput lastMessageId={this.props.items.length - 1} />
+            <MessageInput
+               myId={myId}
+               to={to}
+               push={push}
+               typing={typing}
+               lastMessageId={chat.last.id}
+            />
          </KeyboardAvoidingView>
       );
    }
@@ -107,9 +122,19 @@ const styles = StyleSheet.create({
    }
 });
 
-const mapStateToProps = state => ({
-   items: state.messages.items,
-   loading: state.messages.loading
-});
+const mapStateToProps = (state, props) => {
+   return {
+      chat: state.data.chats.byIds[props.to],
+      myId: state.identity.myId
+   };
+};
+const mapDispatch = {
+   setRoute: messaging.setRoute,
+   push: messaging.pushMsg,
+   typing: messaging.pushTyping
+};
 
-export default connect(mapStateToProps)(Messages);
+export default connect(
+   mapStateToProps,
+   mapDispatch
+)(Messages);

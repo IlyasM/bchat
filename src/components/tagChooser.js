@@ -8,7 +8,7 @@ export class Chooser extends PureComponent {
       LayoutAnimation.easeInEaseOut();
    }
    render() {
-      if (this.props.categories.length < 1) {
+      if (this.props.categories && this.props.categories.length < 1) {
          return (
             <View
                style={{

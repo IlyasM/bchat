@@ -97,6 +97,7 @@ export default class MessageInput extends React.PureComponent {
       this.setState({
          text
       });
+      this.props.typing(this.props.to);
    };
    _onContentSizeChange = event => {
       LayoutAnimation.easeInEaseOut();
@@ -110,12 +111,12 @@ export default class MessageInput extends React.PureComponent {
          return;
       }
       const message = {
-         id: uuid4(),
-         isMe: true,
-         order: this.props.lastMessageId + 1,
-         text: this.state.text.trim()
+         to_id: this.props.to,
+         from_id: this.props.myId,
+         text: this.state.text.trim(),
+         type: "message"
       };
-      // this.props.send("joy", message);
+      this.props.push(message);
       this.setState(state => ({ text: "" }));
    };
    renderSendButton = () => {

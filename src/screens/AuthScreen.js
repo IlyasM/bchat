@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Text, StyleSheet, View, Button } from "react-native";
 import { connect } from "react-redux";
-import { actions } from "../store/actions/identity";
+import { actions } from "../store/actions/messaging";
 class Screen extends Component {
    onUser = () => {
       this.props.navigation.navigate("Main");
