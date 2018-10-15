@@ -25,6 +25,9 @@ export default class FadeImage extends Component {
          }).start();
       });
    };
+   shouldComponentUpdate() {
+      return false;
+   }
 
    render() {
       const color = randomColor();

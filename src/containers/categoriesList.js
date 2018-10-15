@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Text, TouchableOpacity, StyleSheet, FlatList } from "react-native";
 import { categories } from "../fake-data";
-import { loadActions } from "../store/actions/firstActions";
 
 export default class list extends Component {
    renderItem = ({ item }) => {

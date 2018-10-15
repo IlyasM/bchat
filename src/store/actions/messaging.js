@@ -99,7 +99,6 @@ export default {
                   }
                });
                channel.on("typing", ({ id }) => {
-                  console.log("typing incoming from ", id);
                   observer.next({ type: "TYPING_INCOMING", chatId: id });
                });
             })
@@ -133,6 +132,27 @@ export default {
                   });
                })
          )
+      ),
+   setRoute: (action$, state$) =>
+      action$.pipe(
+         ofType("SET_ROUTE"),
+         withLatestFrom(state$),
+         tap(
+            ([
+               { id },
+               {
+                  identity: { channel, myId }
+               }
+            ]) =>
+               id &&
+               channel.push("new:msg", {
+                  from_id: myId,
+                  to_id: id,
+                  type: "status",
+                  text: "seen"
+               })
+         ),
+         ignoreElements()
       ),
    pushTyping: (action$: Observable<Action>, state$: Observable<any>) =>
       action$.pipe(

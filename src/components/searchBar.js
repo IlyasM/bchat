@@ -8,7 +8,6 @@ import {
    Dimensions,
    LayoutAnimation
 } from "react-native";
-import { loadActions } from "../store/actions/firstActions";
 import { connect } from "react-redux";
 
 const Layout = {
@@ -20,7 +19,7 @@ const SearchContainerHorizontalMargin = 10;
 const SearchContainerWidth =
    Layout.window.width - SearchContainerHorizontalMargin * 2;
 
-class SearchBar extends React.PureComponent {
+export default class SearchBar extends React.PureComponent {
    state = {
       text: "",
       showCancelButton: false,
@@ -178,7 +177,7 @@ const styles = StyleSheet.create({
    }
 });
 
-export default connect(
-   undefined,
-   { toggle: loadActions.toggle }
-)(SearchBar);
+// export default connect(
+//    undefined,
+//    { toggle: loadActions.toggle }
+// )(SearchBar);

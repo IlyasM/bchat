@@ -6,7 +6,6 @@ import {
    createDrawerNavigator
 } from "react-navigation";
 import TabBarIcon from "../components/TabBarIcon";
-import HomeScreen from "../screens/HomeScreen";
 import RequestScreen from "../screens/RequestScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 

@@ -102,6 +102,11 @@ class Messages extends React.Component {
                ListFooterComponent={this.renderFooter}
                EmptyListComponent={() => this.renderEmpty()}
             />
+            {this.props.chat.typing && (
+               <Text style={{ margin: 20, color: "rgb(150,150,150)" }}>
+                  typing....
+               </Text>
+            )}
             <MessageInput
                myId={myId}
                to={to}

@@ -42,9 +42,13 @@ class HomeItem extends PureComponent {
                      <Text numberOfLines={1} style={styles.name}>
                         {item.name}
                      </Text>
-                     <Text numberOfLines={2} style={styles.category}>
-                        {item.last && item.last.text}
-                     </Text>
+                     {item.typing ? (
+                        <Text style={styles.category}>typing...</Text>
+                     ) : (
+                        <Text numberOfLines={2} style={styles.category}>
+                           {item.last && item.last.text}
+                        </Text>
+                     )}
                   </View>
                </View>
             </View>
