@@ -11,20 +11,17 @@ import Loading from "../components/Loading";
 import { chats } from "../fake-data";
 import Item from "../components/wishItem";
 import { connect } from "react-redux";
-import { actions } from "../store/actions/wish";
+import { actions } from "../store/actions/broadcasting";
 import Separator from "../components/separator";
 class list extends Component {
-   componentWillMount() {
-      this.props.wishLoad();
-   }
    // componentWillUpdate() {
    //    LayoutAnimation.easeInEaseOut();
    // }
    renderItem = ({ item }) => {
       return (
          <Item
-            yes={this.props.wishAccept}
-            no={this.props.wishDecline}
+            yes={this.props.replyCreate}
+            no={this.props.replyDecline}
             navigation={this.props.navigation}
             item={item}
          />
@@ -65,7 +62,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
    return {
-      list: state.wish.wishList
+      list: state.data.bizBroadcasts.all
    };
 };
 

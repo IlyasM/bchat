@@ -13,14 +13,11 @@ import Colors from "../constants/Colors";
 export default class Item extends PureComponent {
    yes = () => {
       const { item, yes } = this.props;
-      this.props.navigation.navigate("EditReply", { item: item, action: yes });
-      // this.props.yes(this.props.item, "Да я смогу");
-      // Alert.alert(
-      //    "Ваш ответ поступил",
-      //    "Пользователь возможно вам напишет",
-      //    [{ text: "OK", onPress: null }],
-      //    { cancelable: false }
-      // );
+      this.props.navigation.navigate("EditReply", {
+         item: item,
+         action: yes,
+         alert: true
+      });
    };
    no = () => {
       this.props.no(this.props.item);

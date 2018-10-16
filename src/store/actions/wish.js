@@ -31,18 +31,5 @@ export default {
                wishes: myBroadcasts.filter(i => i.active)
             };
          })
-      ),
-   addWish: a$ =>
-      a$.pipe(
-         ofType("BROADCAST_CREATE"),
-         map(action => {
-            const wish = {
-               text: action.text,
-               category: action.category,
-               active: true,
-               id: uuid4()
-            };
-            return { type: "WISH_ADD", wish };
-         })
       )
 };

@@ -11,7 +11,6 @@ import {
 import Loading from "../components/Loading";
 import Separator from "../components/separator";
 import { connect } from "react-redux";
-import { categories } from "../fake-data";
 import { actions } from "../store/actions/broadcast";
 import QuestionCard from "../components/questionCard";
 class list extends Component {
@@ -40,7 +39,7 @@ class list extends Component {
          <QuestionCard
             toggle={this.props.broadcastToggle}
             navigation={this.props.navigation}
-            item={item}
+            broadcastId={item}
          />
       );
    };
@@ -52,9 +51,8 @@ class list extends Component {
       </View>
    );
    render() {
-      const list = this.props.list.filter(
-         item => item.active === this.props.isActive
-      );
+      const list = this.props.list;
+
       return (
          <FlatList
             ref={el => (this.flat = el)}
@@ -68,7 +66,7 @@ class list extends Component {
             ListEmptyComponent={this.renderEmpty}
             // ListHeaderComponent={this.renderHeader}
             // ItemSeparatorComponent={this.renderSeparator}
-            keyExtractor={i => `${i.id}`}
+            keyExtractor={i => `${i}`}
          />
       );
    }
@@ -85,7 +83,7 @@ const styles = StyleSheet.create({
 });
 const mapStateToProps = state => {
    return {
-      list: state.broadcast.myBroadcasts,
+      list: state.data.broadcasts.allIds,
       isActive: state.broadcast.activeTab
    };
 };

@@ -79,10 +79,18 @@ export default {
                   })
                );
                channel.on("new:msg", message => {
-                  observer.next({
-                     type: "NEW_MSG",
-                     payload: { message, myId: name }
-                  });
+                  if (message.reply) {
+                     observer.next({
+                        type: "NEW_REPLY",
+                        payload: { message, myId: name }
+                     });
+                  } else {
+                     observer.next({
+                        type: "NEW_MSG",
+                        payload: { message, myId: name }
+                     });
+                  }
+
                   // ack delivery
                   if (message.type === "message") {
                      setTimeout(() => {
@@ -100,6 +108,9 @@ export default {
                });
                channel.on("typing", ({ id }) => {
                   observer.next({ type: "TYPING_INCOMING", chatId: id });
+               });
+               channel.on("new:broadcast", broadcast => {
+                  observer.next({ type: "NEW_BROADCAST", broadcast });
                });
             })
          )

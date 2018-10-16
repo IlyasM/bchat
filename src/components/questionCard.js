@@ -11,13 +11,13 @@ const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
 import ResponseList from "../containers/responseList";
 import Separator from "../components/separator";
-import { replies } from "../fake-data";
-export class QuestionCard extends PureComponent {
+import { connect } from "react-redux";
+class QuestionCard extends PureComponent {
    toggle = () => {
       this.props.toggle(this.props.item, !this.props.item.active);
    };
    render() {
-      const { category, text, active } = this.props.item;
+      const { category, text, active, replies } = this.props.item;
       return (
          <View style={styles.root}>
             <View style={styles.row}>
@@ -37,7 +37,7 @@ export class QuestionCard extends PureComponent {
             <ResponseList
                isActive={active}
                navigation={this.props.navigation}
-               data={replies()}
+               data={replies}
             />
          </View>
       );
@@ -62,5 +62,8 @@ const styles = StyleSheet.create({
    categoryText: { color: "rgb(120,120,120)", fontFamily: "bebas" },
    text: { fontSize: 16, paddingTop: 8, marginBottom: 14 }
 });
+const mapState = (state, props) => {
+   return { item: state.data.broadcasts.byIds[props.broadcastId] };
+};
 
-export default QuestionCard;
+export default connect(mapState)(QuestionCard);

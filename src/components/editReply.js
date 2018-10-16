@@ -22,8 +22,7 @@ export default class EditReply extends Component {
       placeholderText:
          "Укажите свой ответ, и по возможности, стоимость разрешения вопроса",
       buttonText: "Отправить",
-      title: "Запишите свой ответ",
-      alert: false
+      title: "Запишите свой ответ"
    };
 
    componentDidMount() {
@@ -43,10 +42,12 @@ export default class EditReply extends Component {
    };
 
    send = () => {
-      const { action, item } = this.props.navigation.state.params;
-      action(item, this.state.text);
+      const { action, item, alert } = this.props.navigation.state.params;
+      if (this.state.text.trim() === "") return;
+      //item is broadcast
+      action(item, this.state.text.trim());
       this.delayGoBack();
-      if (!this.props.alert) return;
+      if (!alert) return;
 
       Alert.alert(
          "Ваш ответ поступил",
@@ -57,7 +58,7 @@ export default class EditReply extends Component {
    };
    render() {
       const { buttonText, placeholderText, title, navigation } = this.props;
-      const { action, item } = navigation.state.params;
+      // const { action, item } = navigation.state.params;
 
       return (
          <KeyboardAvoidingView behavior="padding" style={styles.container}>
@@ -73,6 +74,15 @@ export default class EditReply extends Component {
                   placeholder={placeholderText}
                   multiline
                />
+               <View
+                  style={{
+                     margin: 10,
+                     justifyContent: "center",
+                     alignItems: "center"
+                  }}
+               >
+                  <Text style={{ fontSize: 16 }}>{placeholderText}</Text>
+               </View>
                <TouchableOpacity onPress={this.send} style={styles.send}>
                   <Text style={styles.sendText}>{buttonText}</Text>
                </TouchableOpacity>

@@ -1,4 +1,5 @@
 import mergeWith from "lodash/mergeWith";
+import omit from "lodash/omit";
 type Event = {
    id: number,
    toId: string,
@@ -35,7 +36,8 @@ const init: State = {
       byIds: {},
       allIds: []
    },
-   broadcasts: { byIds: {}, allIds: [] }
+   broadcasts: { byIds: {}, allIds: [] },
+   bizBroadcasts: { byIds: {}, all: [] }
 };
 
 export default (state = init, action) => {
@@ -50,14 +52,76 @@ export default (state = init, action) => {
          return handleTyping(true, action.chatId, state);
       case "TYPING_INCOMING_STOP":
          return handleTyping(false, action.chatId, state);
-
+      case "BROADCAST_CREATE_OK":
+         return broadcastCreate(action, state);
+      case "NEW_BROADCAST":
+         return newBroadcast(action, state);
+      case "REPLY_CREATE":
+      case "REPLY_DECLINE":
+         return handleReply(action, state);
+      case "NEW_REPLY":
+         return newReply(action, state);
       default:
          return state;
    }
 };
+function newReply(action, state) {
+   const { reply, business } = action.payload.message;
+
+   const id = parseInt(reply.broadcast_id);
+   const broadcast = state.broadcasts.byIds[id];
+   return {
+      ...state,
+      broadcasts: {
+         ...state.broadcasts,
+         byIds: {
+            ...state.broadcasts.byIds,
+            [id]: {
+               ...broadcast,
+               replies: [{ ...reply, business }, ...broadcast.replies]
+            }
+         }
+      }
+   };
+}
+
+function handleReply({ broadcast }, state) {
+   return {
+      ...state,
+      bizBroadcasts: {
+         byIds: omit(state.bizBroadcasts.byIds, broadcast.id),
+         all: state.bizBroadcasts.all.filter(b => b.id !== broadcast.id)
+      }
+   };
+}
+function newBroadcast({ broadcast }, state) {
+   return {
+      ...state,
+      bizBroadcasts: {
+         byIds: {
+            ...state.bizBroadcasts.byIds,
+            [broadcast.id]: broadcast
+         },
+         all: [broadcast, ...state.bizBroadcasts.all]
+      }
+   };
+}
+function broadcastCreate(action, state) {
+   const broadcast = action.message;
+
+   return {
+      ...state,
+      broadcasts: {
+         byIds: {
+            ...state.broadcasts.byIds,
+            [broadcast.id]: { ...broadcast, replies: [] }
+         },
+         allIds: [broadcast.id, ...state.broadcasts.allIds]
+      }
+   };
+}
 function handleTyping(typing, chatId, state) {
    const chat = state.chats.byIds[chatId];
-   if (!chat) return state;
    return {
       ...state,
       chats: {
@@ -68,17 +132,26 @@ function handleTyping(typing, chatId, state) {
 }
 function newMessage(action, state) {
    const { message, myId } = action.payload;
-
    const chatId = message.to_id === myId ? message.from_id : message.to_id;
-   const chat = state.chats.byIds[chatId];
+   let chat = state.chats.byIds[chatId];
+   if (!chat) {
+      chat = {
+         events: [],
+         id: chatId,
+         last: { id: 0 }
+      };
+   }
    const ids = state.chats.allIds.filter(id => id !== chatId);
+
+   if (message.type !== "message") {
+      for (ev of chat.events) {
+         if (ev.mark === "seen") break;
+         ev.mark = message.text;
+      }
+   }
+
    const events =
-      message.type === "message"
-         ? [message, ...chat.events]
-         : chat.events.map(ev => ({
-              ...ev,
-              mark: ev.mark === "seen" ? ev.mark : message.text
-           }));
+      message.type === "message" ? [message, ...chat.events] : chat.events;
    const last = message.type === "message" ? message : chat.last;
    return {
       ...state,
@@ -101,6 +174,10 @@ function calculateStateFromEvents(action, state) {
    //get updated messages in chats post join
    const { response, me } = action.payload;
    const { messages, statuses, last_event_id } = response;
+   console.log(response);
+   if (Object.keys(messages).length === 0 && messages.constructor === Object) {
+      return state;
+   }
    const chats = mergeWith(state.chats.byIds, messages, (oldChat, newChat) => {
       const initial = oldChat ? oldChat.events : [];
       return {
@@ -113,6 +190,7 @@ function calculateStateFromEvents(action, state) {
    // sort chats according to last message date
    const ids =
       Object.keys(chats).sort((a, b) => {
+         if (!chats[a].last || !chats[b].last) return false;
          return chats[a].last.inserted_at < chats[b].last.inserted_at;
       }) || [];
    // handle statuses
@@ -134,7 +212,6 @@ function calculateStateFromEvents(action, state) {
       }
    });
 
-   // console.log(chats, statuses, ids);
    return {
       ...state,
       lastEventId: last_event_id,

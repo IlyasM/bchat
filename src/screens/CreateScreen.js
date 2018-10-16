@@ -9,7 +9,6 @@ import {
 } from "react-native";
 import Chooser from "../components/tagChooser";
 import Search from "../components/searchInput";
-import { categories } from "../fake-data";
 import { connect } from "react-redux";
 import { actions } from "../store/actions/filter";
 import ProfileIcon from "../containers/profileIcon";

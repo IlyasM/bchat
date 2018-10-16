@@ -19,11 +19,16 @@ export default class Item extends PureComponent {
             <View style={styles.row}>
                <FadeInImage
                   style={styles.image}
-                  uri={item.business.image.uri}
+                  uri={item.business.image && item.business.image.uri}
                />
-               <Text numberOfLines={2} style={styles.category}>
-                  {item.reply}
-               </Text>
+               <View>
+                  <Text numberOfLines={2} style={styles.name}>
+                     {item.business.name}
+                  </Text>
+                  <Text numberOfLines={2} style={styles.category}>
+                     {item.text}
+                  </Text>
+               </View>
             </View>
          </TouchableOpacity>
       );
@@ -43,14 +48,20 @@ const styles = StyleSheet.create({
       flexDirection: "row",
       alignItems: "center"
    },
+   name: {
+      marginLeft: 8,
+      fontSize: 16,
+      maxWidth: 240
+   },
    category: {
       marginLeft: 8,
       fontSize: 14,
-      maxWidth: 240
+      maxWidth: 240,
+      color: "rgb(120,120,120)"
    },
    image: {
-      borderRadius: 15,
-      height: 30,
-      width: 30
+      borderRadius: 22,
+      height: 44,
+      width: 44
    }
 });

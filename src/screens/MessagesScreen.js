@@ -46,9 +46,14 @@ export default class MessagesScreen extends Component {
       const to = params.category
          ? `business:${params.id}`
          : `user:${params.id}`;
+      console.log("-=-=-=-=-=-=-=", to);
       return (
          <View style={styles.container}>
-            <MessageList to={to} navigation={this.props.navigation} />
+            <MessageList
+               entity={this.props.navigation.state.params}
+               to={to}
+               navigation={this.props.navigation}
+            />
          </View>
       );
    }

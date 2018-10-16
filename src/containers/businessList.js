@@ -15,6 +15,7 @@ import { connect } from "react-redux";
 import { generate } from "../fake-data";
 import { actions as broad } from "../store/actions/broadcast";
 import { actions as biz } from "../store/actions/businesses";
+import { actions as broadcasting } from "../store/actions/broadcasting";
 import HomeItem from "../components/listHomeItem";
 import Question from "../components/question";
 class list extends Component {
@@ -33,6 +34,7 @@ class list extends Component {
                navigation={this.props.navigation}
                category={this.props.category}
                broadcast={this.props.create}
+               newBroadcast={this.props.newBroadcast}
             />
          )}
       </View>
@@ -61,7 +63,11 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
    return { data: state.businesses.list };
 };
-const mapDispatchToProps = { create: broad.broadcast, fetch: biz.fetch };
+const mapDispatchToProps = {
+   create: broad.broadcast,
+   fetch: biz.fetch,
+   newBroadcast: broadcasting.broadcastCreate
+};
 
 export default connect(
    mapStateToProps,

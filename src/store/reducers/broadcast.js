@@ -14,19 +14,6 @@ const init: State = {
 };
 export default (state = init, action) => {
    switch (action.type) {
-      case "BROADCAST_CREATE":
-         return {
-            activeTab: true,
-            myBroadcasts: [
-               {
-                  text: action.text,
-                  category: action.category,
-                  active: true,
-                  id: uuid4()
-               },
-               ...state.myBroadcasts
-            ]
-         };
       case "BROADCAST_TOGGLE":
          const toReturn = state.myBroadcasts.filter(
             b => b.id !== action.question.id

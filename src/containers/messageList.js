@@ -26,11 +26,11 @@ const { Localization } = DangerZone;
 class Messages extends React.Component {
    state = { statusHeight: 20, currentTimeZone: null };
    componentWillMount() {
-      // StatusBarManager.getHeight(statusBarHeight => {
-      //    requestAnimationFrame(() => {
-      //       this.setState({ statusHeight: statusBarHeight.height });
-      //    });
-      // });
+      StatusBarManager.getHeight(statusBarHeight => {
+         requestAnimationFrame(() => {
+            this.setState({ statusHeight: statusBarHeight.height });
+         });
+      });
       // StatusBarHeight.addEventListener(this.statusHeightChange);
    }
    componentWillUnmount() {
@@ -77,7 +77,8 @@ class Messages extends React.Component {
    };
 
    render() {
-      const { items, loading, to, chat, push, myId, typing } = this.props;
+      let { loading, to, chat, push, myId, typing, entity } = this.props;
+
       // console.log("in render", chat);
       return (
          <KeyboardAvoidingView
@@ -89,7 +90,7 @@ class Messages extends React.Component {
                data={chat.events}
                renderItem={this.renderItem}
                inverted
-               style={{ paddingVertical: 10 }}
+               contentContainerStyle={{ paddingBottom: 10 }}
                // refreshing={this.state.isRefreshing}
                // keyboardDismissMode="on-drag"
                removeClippedSubviews
@@ -102,18 +103,12 @@ class Messages extends React.Component {
                ListFooterComponent={this.renderFooter}
                EmptyListComponent={() => this.renderEmpty()}
             />
-            {this.props.chat.typing && (
+            {chat.typing && (
                <Text style={{ margin: 20, color: "rgb(150,150,150)" }}>
                   typing....
                </Text>
             )}
-            <MessageInput
-               myId={myId}
-               to={to}
-               push={push}
-               typing={typing}
-               lastMessageId={chat.last.id}
-            />
+            <MessageInput myId={myId} to={to} push={push} typing={typing} />
          </KeyboardAvoidingView>
       );
    }

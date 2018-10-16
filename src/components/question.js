@@ -17,14 +17,14 @@ export default class Question extends PureComponent {
    send = () => {
       const text = this.state.text.trim();
       if (text === "") return;
-      this.props.broadcast(text, this.props.category);
-
+      this.props.newBroadcast({ text, category: this.props.category });
       requestAnimationFrame(() => {
          this.setState({ text: "" }, () => {
             this.ti.blur();
             this.props.navigation.navigate("RequestStack");
          });
       });
+      this.ti.setNativeProps({ text: "" });
    };
    render() {
       const { textInputWidth, text, focused } = this.state;

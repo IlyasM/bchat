@@ -14,6 +14,13 @@ class Screen extends Component {
          1
       );
    };
+   onBiz2 = () => {
+      this.props.navigation.navigate("Business");
+      this.props.connect(
+         4,
+         2
+      );
+   };
 
    render() {
       return (
@@ -23,6 +30,11 @@ class Screen extends Component {
                onPress={this.onBiz}
                style={styles.button}
                title="business"
+            />
+            <Button
+               onPress={this.onBiz2}
+               style={styles.button}
+               title="business 2"
             />
          </View>
       );
