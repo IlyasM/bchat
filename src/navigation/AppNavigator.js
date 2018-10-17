@@ -3,7 +3,9 @@ import { createSwitchNavigator } from "react-navigation";
 
 import MainTabNavigator from "./MainTabNavigator";
 import BusinessTabNavigator from "./BusinessTabNavigator";
-import AuthScreen from "../screens/AuthScreen";
+// import AuthScreen from "../screens/AuthScreen";
+import AuthScreen from "../screens/auth";
+
 let Navigator = createSwitchNavigator(
    {
       // You could add another route here for authentication.

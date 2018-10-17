@@ -78,7 +78,15 @@ class Messages extends React.Component {
 
    render() {
       let { loading, to, chat, push, myId, typing, entity } = this.props;
-
+      if (!chat) {
+         chat = {
+            events: [],
+            id: to,
+            category: entity.category,
+            name: entity.name,
+            last: { id: 0 }
+         };
+      }
       // console.log("in render", chat);
       return (
          <KeyboardAvoidingView

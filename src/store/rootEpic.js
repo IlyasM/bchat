@@ -4,8 +4,9 @@ import wish from "./actions/wish";
 import businesses from "./actions/businesses";
 import messaging from "./actions/messaging";
 import broadcasting from "./actions/broadcasting";
+import auth from "./actions/auth";
 //currently combine epics receives list of epic functions
 import { Observable } from "rxjs";
 export default combineEpics(
-   ...values({ ...wish, ...businesses, ...messaging, ...broadcasting })
+   ...values({ ...wish, ...businesses, ...messaging, ...broadcasting, ...auth })
 );

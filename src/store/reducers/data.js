@@ -66,9 +66,9 @@ export default (state = init, action) => {
    }
 };
 function newReply(action, state) {
-   const { reply, business } = action.payload.message;
+   const { message, from } = action.payload.response;
 
-   const id = parseInt(reply.broadcast_id);
+   const id = parseInt(message.broadcast_id);
    const broadcast = state.broadcasts.byIds[id];
    return {
       ...state,
@@ -78,7 +78,7 @@ function newReply(action, state) {
             ...state.broadcasts.byIds,
             [id]: {
                ...broadcast,
-               replies: [{ ...reply, business }, ...broadcast.replies]
+               replies: [{ ...message, business: from }, ...broadcast.replies]
             }
          }
       }
@@ -131,14 +131,18 @@ function handleTyping(typing, chatId, state) {
    };
 }
 function newMessage(action, state) {
-   const { message, myId } = action.payload;
+   const { response, myId } = action.payload;
+   const { message, from } = response;
    const chatId = message.to_id === myId ? message.from_id : message.to_id;
    let chat = state.chats.byIds[chatId];
+   console.log(chat);
    if (!chat) {
       chat = {
          events: [],
          id: chatId,
-         last: { id: 0 }
+         last: message,
+         name: from.name,
+         category: from.category
       };
    }
    const ids = state.chats.allIds.filter(id => id !== chatId);
@@ -174,7 +178,6 @@ function calculateStateFromEvents(action, state) {
    //get updated messages in chats post join
    const { response, me } = action.payload;
    const { messages, statuses, last_event_id } = response;
-   console.log(response);
    if (Object.keys(messages).length === 0 && messages.constructor === Object) {
       return state;
    }
@@ -195,6 +198,7 @@ function calculateStateFromEvents(action, state) {
       }) || [];
    // handle statuses
    Object.keys(statuses).forEach(id => {
+      if (!chats[id]) return;
       if (statuses[id].text === "seen") {
          chats[id].last.mark = "seen";
       } else {

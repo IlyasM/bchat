@@ -78,29 +78,29 @@ export default {
                      payload
                   })
                );
-               channel.on("new:msg", message => {
-                  if (message.reply) {
+               channel.on("new:msg", response => {
+                  if (response.message.type === "reply") {
                      observer.next({
                         type: "NEW_REPLY",
-                        payload: { message, myId: name }
+                        payload: { response, myId: name }
                      });
                   } else {
                      observer.next({
                         type: "NEW_MSG",
-                        payload: { message, myId: name }
+                        payload: { response, myId: name }
                      });
                   }
 
                   // ack delivery
-                  if (message.type === "message") {
+                  if (response.message.type === "message") {
                      setTimeout(() => {
                         observer.next({
                            type: "PUSH_MSG",
                            message: {
                               type: "status",
                               text: null,
-                              to_id: message.from_id,
-                              from_id: message.to_id
+                              to_id: response.message.from_id,
+                              from_id: response.message.to_id
                            }
                         });
                      }, 1000);
@@ -132,11 +132,14 @@ export default {
                      message.text =
                         route === message.to_id ? "seen" : "delivered";
                   }
-                  channel.push("new:msg", message).receive("ok", message => {
+                  channel.push("new:msg", message).receive("ok", response => {
                      observer.next({
                         type: "NEW_MSG",
                         payload: {
-                           message: { ...message, mark: "saved" },
+                           response: {
+                              message: { ...response.message, mark: "saved" },
+                              from: response.from
+                           },
                            myId
                         }
                      });
@@ -152,16 +155,21 @@ export default {
             ([
                { id },
                {
-                  identity: { channel, myId }
+                  identity: { channel, myId },
+                  data: { chats: byIds }
                }
-            ]) =>
+            ]) => {
                id &&
-               channel.push("new:msg", {
-                  from_id: myId,
-                  to_id: id,
-                  type: "status",
-                  text: "seen"
-               })
+                  channel.push("new:msg", {
+                     from_id: myId,
+                     to_id: id,
+                     type: "status",
+                     text: "seen"
+                  });
+               if (!byIds[id]) {
+                  //create chat?
+               }
+            }
          ),
          ignoreElements()
       ),
