@@ -49,7 +49,7 @@ class EnterEmail extends Component {
       } else {
          this.setState({ errorText: "" });
       }
-      this.props.register(text);
+      this.props.register(text, this.props.navigation);
    };
    render() {
       const { buttonText, placeholderText, title, navigation } = this.props;

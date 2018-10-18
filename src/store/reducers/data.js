@@ -7,7 +7,7 @@ type Event = {
    text: string,
    type: "message" | "status" | "reply",
    insertedAt: string,
-   mark: "saved" | "delivered" | "seen" | null,
+   mark: "saved" | "delivered" | "seen",
    broadcastId: number
 };
 type Chat = {
@@ -65,6 +65,7 @@ export default (state = init, action) => {
          return state;
    }
 };
+
 function newReply(action, state) {
    const { message, from } = action.payload.response;
 
