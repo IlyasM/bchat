@@ -31,7 +31,7 @@ export default (state = init, action) => {
             email: action.payload.email
          };
       case "VERIFY_CODE_OK":
-         return { ...state, token: action.token };
+         return { ...state, token: action.token, verifyCodeError: "" };
       case "VERIFY_CODE_ERROR":
          return { ...state, verifyCodeError: action.error };
       default:

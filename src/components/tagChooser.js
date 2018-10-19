@@ -2,8 +2,18 @@ import React, { PureComponent } from "react";
 import { Text, View, StyleSheet, LayoutAnimation } from "react-native";
 import Tag from "./tag";
 import { cap } from "../constants/utils";
-
+import { categories } from "../fake-data";
 export class Chooser extends PureComponent {
+   static defaultProps = {
+      onPress: category => {
+         requestAnimationFrame(() => {
+            this.props.navigation.navigate("CreateWish", {
+               category
+            });
+         });
+      },
+      categories: categories
+   };
    componentWillUpdate() {
       LayoutAnimation.easeInEaseOut();
    }
@@ -26,11 +36,7 @@ export class Chooser extends PureComponent {
          <View style={styles.root}>
             {this.props.categories.map((category, i) => {
                const onPress = () => {
-                  requestAnimationFrame(() => {
-                     this.props.navigation.navigate("CreateWish", {
-                        category
-                     });
-                  });
+                  this.props.onPress(category);
                };
                return <Tag onPress={onPress} key={i} name={category.name} />;
             })}

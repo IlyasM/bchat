@@ -5,16 +5,18 @@ import MainTabNavigator from "./MainTabNavigator";
 import BusinessTabNavigator from "./BusinessTabNavigator";
 // import AuthScreen from "../screens/AuthScreen";
 import AuthScreen from "../screens/auth";
-
+import ChoiceScreen from "../screens/choiceAndCreate";
 let Navigator = createSwitchNavigator(
    {
       // You could add another route here for authentication.
       // Read more at https://reactnavigation.org/docs/en/auth-flow.html
+
       Auth: AuthScreen,
+      Choice: ChoiceScreen,
       Business: BusinessTabNavigator,
       Main: MainTabNavigator
    },
-   { initialRouteName: "Auth" }
+   { initialRouteName: "Choice" }
 );
 import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 

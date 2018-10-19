@@ -9,14 +9,11 @@ export const actions = {
       email,
       navigation
    }),
-   verifyCode: (code, email) => ({
+   verifyCode: (code, email, navigation) => ({
       type: "VERIFY_CODE",
       code,
-      email
-   }),
-   enterName: name => ({
-      type: "ENTER_NAME",
-      name
+      email,
+      navigation
    })
 };
 export default {
@@ -34,6 +31,12 @@ export default {
                         email: email
                      }
                   };
+               }),
+               catchError(({ response }) => {
+                  return of({
+                     type: "VERIFY_CODE_ERROR",
+                     error: "something went wrong"
+                  });
                })
             )
          )
@@ -41,9 +44,10 @@ export default {
    verifyCode: (action$: Observable<Action>) =>
       action$.pipe(
          ofType("VERIFY_CODE"),
-         mergeMap(({ email, code }) =>
+         mergeMap(({ email, code, navigation }) =>
             ajax.post(baseURL + "verify", { email, code }, headers).pipe(
                map(({ response }) => {
+                  navigation && navigation.navigate("Choice");
                   if (response.token) {
                      return {
                         type: "VERIFY_CODE_OK",
@@ -54,7 +58,27 @@ export default {
                catchError(({ response }) => {
                   return of({
                      type: "VERIFY_CODE_ERROR",
-                     error: response.error
+                     error: response && response.error
+                  });
+               })
+            )
+         )
+      ),
+   createBusiness: action$ =>
+      action$.pipe(
+         ofType("CREATE_BUSINESS"),
+         mergeMap(({ business }) =>
+            ajax.post(baseURL + "create-business", { business }, headers).pipe(
+               map(({ response }) => {
+                  return {
+                     type: "CREATE_BUSINESS_OK",
+                     business: response.business
+                  };
+               }),
+               catchError(({ response }) => {
+                  return of({
+                     type: "CREATE_BUSINESS_ERROR",
+                     error: response && response.error
                   });
                })
             )

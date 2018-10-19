@@ -12,7 +12,8 @@ class EnterCode extends Component {
       headerBackImage: <Back />
    };
    fulfill = code => {
-      this.props.verifyCode(code, this.props.email);
+      const { email, navigation } = this.props;
+      this.props.verifyCode(code, email, navigation);
       // send request to verify code
       // on success token will be saved and go to enter name screen
       // on failure display whether incorrect code or expired

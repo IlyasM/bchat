@@ -25,11 +25,6 @@ export default class SearchInput extends PureComponent {
    _onBlur = () => {
       if (this.props.query === "") this._onChangeText("", true);
    };
-   focus = () => {
-      requestAnimationFrame(() => {
-         if (this.props.query !== "") this.ti.focus();
-      });
-   };
 
    render() {
       const { textInputWidth, text, focused } = this.state;
