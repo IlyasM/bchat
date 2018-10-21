@@ -6,11 +6,11 @@ import {
    tap,
    debounceTime,
    ignoreElements
-} from "rxjs/operators";
-import { Socket } from "phoenix";
-import { Observable, of } from "rxjs";
-import { ofType } from "redux-observable";
-const wsURL = "ws://localhost:4000";
+} from "rxjs/operators"
+import { Socket } from "phoenix"
+import { Observable, of } from "rxjs"
+import { ofType } from "redux-observable"
+const wsURL = "ws://localhost:4000"
 export const actions = {
    broadcastCreate: message => ({
       type: "BROADCAST_CREATE",
@@ -22,7 +22,7 @@ export const actions = {
       reply
    }),
    replyDecline: broadcast => ({ type: "REPLY_DECLINE", broadcast })
-};
+}
 export default {
    broadcastCreate: (action$, state$) =>
       action$.pipe(
@@ -34,8 +34,8 @@ export default {
                   observer.next({
                      type: "BROADCAST_CREATE_OK",
                      message
-                  });
-               });
+                  })
+               })
             })
          )
       ),
@@ -50,9 +50,9 @@ export default {
                broadcast_id: `${broadcast.id}`,
                text: reply,
                type: "reply"
-            };
-            channel.push("new:msg", message);
+            }
+            channel.push("new:msg", message)
          }),
          ignoreElements()
       )
-};
+}
