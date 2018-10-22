@@ -4,7 +4,8 @@ const init = {
   loading: false,
   myId: null,
   email: null,
-  token: null,
+  token:
+    "SFMyNTY.g3QAAAACZAAEZGF0YW0AAAAUaWx5YXNrejdAZ21haWwuY29tOjFkAAZzaWduZWRuBgCuhwKbZgE.h6CubxA3LeB8p5Y9bo_6h0SMcnBMxlmisWXGH7YBpWI",
   verifyCodeError: "",
   me: {},
   category: null
@@ -12,15 +13,15 @@ const init = {
 export default (state = init, action) => {
   switch (action.type) {
     case "CONNECT":
-      const myId = action.bizId
-        ? "business:" + action.bizId
-        : "user:" + action.id
+      const myId = action.me.category
+        ? "business:" + action.me.id
+        : "user:" + action.me.id
       console.log("identity reducer connected", myId)
-      return { ...state, loading: true, myId }
+      console.log(action.me)
+      return { ...state, loading: true, myId, me: action.me }
     case "SET_CATEGORY":
       return { ...state, category: action.category }
-    case "CREATE_BUSINESS_OK":
-      return { ...state, me: action.business }
+
     case "JOIN_MAIN_OK":
       return {
         ...state,

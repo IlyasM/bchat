@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
 import {
   Text,
   StyleSheet,
@@ -6,33 +6,37 @@ import {
   ScrollView,
   TextInput,
   KeyboardAvoidingView
-} from "react-native";
-import Chooser from "../components/tagChooser";
-import Search from "../components/searchInput";
-import { connect } from "react-redux";
-import { actions } from "../store/actions/filter";
-import ProfileIcon from "../containers/profileIcon";
-import Loading from "../components/Loading";
+} from "react-native"
+import Chooser from "../components/tagChooser"
+import Search from "../components/searchInput"
+import { connect } from "react-redux"
+import { actions } from "../store/actions/filter"
+import ProfileIcon from "../containers/profileIcon"
+import Loading from "../components/Loading"
 class Create extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: "Я ищу",
       headerRight: <ProfileIcon navigation={navigation} />
-    };
-  };
-  componentDidMount() {
-    this.props.navigation.addListener("willFocus", route => {
-      this.search.focus();
-    });
+    }
   }
+  // componentDidMount() {
+  //   this.props.navigation.addListener("willFocus", route => {
+  //     this.search.focus()
+  //   })
+  // }
   componentWillUnmount() {
-    this.props.navigation.removeListener("willFocus");
+    this.props.navigation.removeListener("willFocus")
   }
-  state = { text: "" };
+  state = { text: "" }
   _onChangeText = text => {
-    this.props.search(text.trim());
-  };
+    this.props.search(text.trim())
+  }
+  onTagPress = category => {
+    this.props.navigation.navigate("CreateWish", { category })
+  }
   render() {
+    console.log(this.props.navigation)
     return (
       <View style={styles.container}>
         <Search
@@ -46,6 +50,7 @@ class Create extends Component {
           ) : (
             <ScrollView keyboardShouldPersistTaps="always">
               <Chooser
+                onPress={this.onTagPress}
                 navigation={this.props.navigation}
                 categories={this.props.categories}
               />
@@ -53,7 +58,7 @@ class Create extends Component {
           )}
         </KeyboardAvoidingView>
       </View>
-    );
+    )
   }
 }
 
@@ -64,17 +69,17 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   textInput: { height: 30, width: 200, paddingLeft: 10 }
-});
+})
 const mapStateToProps = state => {
   return {
     categories: state.filter.results,
     query: state.filter.query,
     loading: state.identity.loading
-  };
-};
-const mapDispatchToProps = { search: actions.filter };
+  }
+}
+const mapDispatchToProps = { search: actions.filter }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Create);
+)(Create)

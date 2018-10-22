@@ -1,16 +1,16 @@
-import React, { Component } from "react";
-import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
-import MessageList from "../containers/messageList";
-import Back from "../components/backArrow";
-import FadeInImage from "../components/fadeImage";
+import React, { Component } from "react"
+import { Text, StyleSheet, View, TouchableOpacity } from "react-native"
+import MessageList from "../containers/messageList"
+import Back from "../components/backArrow"
+import FadeInImage from "../components/fadeImage"
 export default class MessagesScreen extends Component {
   static navigationOptions = ({ navigation }) => {
-    let image = navigation.getParam("image");
+    let image = navigation.getParam("image")
     return {
       headerTitle: (
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("BusinessProfile", navigation.state.params);
+            navigation.navigate("BusinessProfile", navigation.state.params)
           }}
           style={{ alignItems: "center", width: 200 }}
         >
@@ -28,20 +28,21 @@ export default class MessagesScreen extends Component {
           onPress={() => {
             navigation.navigate("PhotoViewer", {
               image: navigation.getParam("image")
-            });
+            })
           }}
           style={styles.imageContainer}
         >
           <FadeInImage style={styles.image} uri={image && image.uri} />
         </TouchableOpacity>
       )
-    };
-  };
+    }
+  }
 
   render() {
-    const params = this.props.navigation.state.params;
-    const to = params.category ? `business:${params.id}` : `user:${params.id}`;
-    console.log("-=-=-=-=-=-=-=", to);
+    const params = this.props.navigation.state.params
+
+    const to = params.category ? `business:${params.id}` : `user:${params.id}`
+    console.log("-=-=-=-=-=-=-=", to, params)
     return (
       <View style={styles.container}>
         <MessageList
@@ -50,7 +51,7 @@ export default class MessagesScreen extends Component {
           navigation={this.props.navigation}
         />
       </View>
-    );
+    )
   }
 }
 
@@ -74,4 +75,4 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30
   }
-});
+})

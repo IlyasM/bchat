@@ -6,6 +6,12 @@ export default (state = { results: [], categories: [], query: "" }, action) => {
         categories: action.payload.categories,
         results: action.payload.categories
       }
+    case "GET_CATEGORIES_OK":
+      return {
+        ...state,
+        categories: action.categories,
+        results: action.categories
+      }
     case "FILTER_CATEGORIES":
       return {
         ...state,

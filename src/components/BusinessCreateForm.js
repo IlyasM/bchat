@@ -10,10 +10,8 @@ import {
   ScrollView,
   TouchableOpacity
 } from "react-native"
-import Colors from "../constants/Colors"
-import Icon from "react-native-vector-icons/Ionicons"
 import { connect } from "react-redux"
-import { actions } from "../store/actions/businesses"
+import { actions } from "../store/actions/entities"
 import MaterialTextInput from "./MaterialTextInput"
 import FullButton from "../components/fullButton"
 const fields = [
@@ -42,9 +40,13 @@ class BizCreate extends Component {
     })
   }
   onFocus = name => {
-    this.setState({
-      selected: name,
-      [name]: { ...this.state[name], touched: true }
+    requestAnimationFrame(() => {
+      this.setState(state => {
+        return {
+          selected: name,
+          [name]: { ...state[name], touched: true }
+        }
+      })
     })
   }
   onSubmit = () => {
@@ -69,14 +71,15 @@ class BizCreate extends Component {
       long: this.state.long.value.trim(),
       phone: this.state.phone.value.trim()
     }
-    this.props.createBusiness(business)
+    this.props.createBusiness(business, this.props.navigation)
   }
   render() {
+    console.log("render form")
     // const { action, item } = navigation.state.params;
     return (
       <KeyboardAvoidingView behavior="padding" style={styles.container}>
         <ScrollView contentContainerStyle={{ padding: 10 }}>
-          <Text style={{ fontSize: 16 ,marginBottom:10}}>
+          <Text style={{ fontSize: 16, marginBottom: 10 }}>
             #{this.props.category.name.toLowerCase()}
           </Text>
           {fields.map(field => (

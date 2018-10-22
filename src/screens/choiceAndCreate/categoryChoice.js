@@ -10,7 +10,7 @@ import {
 import Chooser from "../../components/tagChooser"
 import Search from "../../components/searchInput"
 import { connect } from "react-redux"
-import { actions as biz } from "../../store/actions/businesses"
+import { actions as biz } from "../../store/actions/entities"
 import { actions as filter } from "../../store/actions/filter"
 import Loading from "../../components/Loading"
 import { categories } from "../../fake-data"
@@ -21,7 +21,8 @@ class CategoryChoice extends Component {
     }
   }
   componentWillMount() {
-    this.props.afterJoin({ categories })
+    this.props.getCategories()
+    // this.props.afterJoin({ categories })
   }
 
   onTagPress = category => {
