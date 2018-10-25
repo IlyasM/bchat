@@ -55,7 +55,9 @@
     "redux": "^4.0.0",
     "redux-devtools-extension": "^2.13.5",
     "redux-observable": "^1.0.0",
+    "redux-orm": "^0.12.1",
     "redux-persist": "^5.10.0",
+    "reselect": "^4.0.0",
     "rxjs": "^6.3.2",
     "tcomb-form-native": "^0.6.20",
     "yup": "^0.26.6"

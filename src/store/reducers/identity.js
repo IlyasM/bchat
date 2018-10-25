@@ -16,8 +16,6 @@ export default (state = init, action) => {
       const myId = action.me.category
         ? "business:" + action.me.id
         : "user:" + action.me.id
-      console.log("identity reducer connected", myId)
-      console.log(action.me)
       return { ...state, loading: true, myId, me: action.me }
     case "SET_CATEGORY":
       return { ...state, category: action.category }

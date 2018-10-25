@@ -13,7 +13,7 @@ import {
 import { Socket } from "phoenix"
 import { Observable, of } from "rxjs"
 import { ofType } from "redux-observable"
-const wsURL = "ws://localhost:4000"
+import { wsURL } from "../../constants/networking"
 export const actions = {
   connect: (id: number, bizId: number) => ({
     type: "CONNECT",
@@ -48,7 +48,6 @@ export default {
         ]) =>
           Observable.create(observer => {
             // connect socket
-            console.log("trying to connect")
             const socket = new Socket(`${wsURL}/socket`, {
               params: { token }
             })
@@ -65,7 +64,6 @@ export default {
               last_event_id: lastEventId,
               chat_ids: chats.allIds
             })
-            console.log(lastEventId, chats.allIds)
             channel
               .join()
               .receive("ok", response => {

@@ -6,6 +6,7 @@ import {
   TextInput,
   Alert,
   KeyboardAvoidingView,
+  Platform,
   Dimensions,
   ScrollView,
   TouchableOpacity
@@ -74,10 +75,13 @@ class BizCreate extends Component {
     this.props.createBusiness(business, this.props.navigation)
   }
   render() {
-    console.log("render form")
     // const { action, item } = navigation.state.params;
     return (
-      <KeyboardAvoidingView behavior="padding" style={styles.container}>
+      <KeyboardAvoidingView
+        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 84}
+        behavior="padding"
+        style={styles.container}
+      >
         <ScrollView contentContainerStyle={{ padding: 10 }}>
           <Text style={{ fontSize: 16, marginBottom: 10 }}>
             #{this.props.category.name.toLowerCase()}

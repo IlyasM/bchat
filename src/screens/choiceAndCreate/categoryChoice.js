@@ -14,6 +14,7 @@ import { actions as biz } from "../../store/actions/entities"
 import { actions as filter } from "../../store/actions/filter"
 import Loading from "../../components/Loading"
 import { categories } from "../../fake-data"
+import { getFilteredCategories } from "../../store/reducers/filter"
 class CategoryChoice extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
@@ -33,11 +34,7 @@ class CategoryChoice extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Search
-          ref={el => (this.search = el)}
-          query={this.props.query}
-          search={this.props.filter}
-        />
+        <Search query={this.props.query} search={this.props.filter} />
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={70}>
           {this.props.loading ? (
             <Loading />
@@ -66,7 +63,7 @@ const styles = StyleSheet.create({
 })
 const mapStateToProps = state => {
   return {
-    categories: state.filter.results,
+    categories: getFilteredCategories(state),
     query: state.filter.query,
     loading: state.identity.loading
   }

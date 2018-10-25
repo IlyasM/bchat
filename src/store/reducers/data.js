@@ -133,13 +133,12 @@ function handleTyping(typing, chatId, state) {
   }
 }
 function newMessage(action, state) {
-  const { response, myId } = action.payload
+  const { response } = action.payload
   const { message, from } = response
   const chatId = from.category ? "business:" + from.id : "user:" + from.id
   let chat = state.chats.byIds[chatId]
   if (!chat) {
     if (message.type !== "message") {
-      console.log("in no chat message not status")
       return state
     }
 
@@ -149,7 +148,6 @@ function newMessage(action, state) {
       name: from.name,
       category: from.category
     }
-    console.log("-=-=-=-=", chat, from)
   }
   const ids = state.chats.allIds.filter(id => id !== chatId)
 

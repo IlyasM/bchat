@@ -13,6 +13,7 @@ import { connect } from "react-redux"
 import { actions } from "../store/actions/filter"
 import ProfileIcon from "../containers/profileIcon"
 import Loading from "../components/Loading"
+import { getFilteredCategories } from "../store/reducers/filter"
 class Create extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
@@ -36,7 +37,7 @@ class Create extends Component {
     this.props.navigation.navigate("CreateWish", { category })
   }
   render() {
-    console.log(this.props.navigation)
+    console.log(this.props.categories)
     return (
       <View style={styles.container}>
         <Search
@@ -45,17 +46,13 @@ class Create extends Component {
           search={this.props.search}
         />
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={70}>
-          {this.props.loading ? (
-            <Loading />
-          ) : (
-            <ScrollView keyboardShouldPersistTaps="always">
-              <Chooser
-                onPress={this.onTagPress}
-                navigation={this.props.navigation}
-                categories={this.props.categories}
-              />
-            </ScrollView>
-          )}
+          <ScrollView keyboardShouldPersistTaps="always">
+            <Chooser
+              onPress={this.onTagPress}
+              navigation={this.props.navigation}
+              categories={this.props.categories}
+            />
+          </ScrollView>
         </KeyboardAvoidingView>
       </View>
     )
@@ -72,9 +69,9 @@ const styles = StyleSheet.create({
 })
 const mapStateToProps = state => {
   return {
-    categories: state.filter.results,
-    query: state.filter.query,
-    loading: state.identity.loading
+    categories: getFilteredCategories(state),
+    query: state.filter.query
+    // loading: state.identity.loading
   }
 }
 const mapDispatchToProps = { search: actions.filter }

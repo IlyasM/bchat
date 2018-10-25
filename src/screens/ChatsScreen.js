@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
-import ChatList from "../containers/chatList";
-import Icon from "react-native-vector-icons/Ionicons";
-import SwitchButton from "../containers/switchButton";
-import { connect } from "react-redux";
-import { actions } from "../store/actions/accountMode";
+import React, { Component } from "react"
+import { Text, StyleSheet, View, TouchableOpacity } from "react-native"
+import ChatList from "../containers/chatList"
+import Icon from "react-native-vector-icons/Ionicons"
+import SwitchButton from "../containers/switchButton"
+import { connect } from "react-redux"
+import { actions } from "../store/actions/accountMode"
 class Chats extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
@@ -19,14 +19,14 @@ class Chats extends Component {
         </TouchableOpacity>
       ),
       headerLeft: <SwitchButton navigation={navigation} />
-    };
-  };
+    }
+  }
   render() {
     return (
       <View style={styles.container}>
         <ChatList mode={this.props.mode} navigation={this.props.navigation} />
       </View>
-    );
+    )
   }
 }
 export default connect(
@@ -34,7 +34,7 @@ export default connect(
     mode: state.accountMode.mode
   }),
   undefined
-)(Chats);
+)(Chats)
 
 const styles = StyleSheet.create({
   container: {
@@ -49,4 +49,4 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     padding: 7
   }
-});
+})

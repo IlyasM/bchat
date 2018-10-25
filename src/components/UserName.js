@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   Dimensions,
   ScrollView,
+  Platform,
   TouchableOpacity
 } from "react-native"
 import Colors from "../constants/Colors"
@@ -45,7 +46,11 @@ class UserName extends Component {
   render() {
     // const { action, item } = navigation.state.params;
     return (
-      <KeyboardAvoidingView behavior="padding" style={styles.container}>
+      <KeyboardAvoidingView
+        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 84}
+        behavior="padding"
+        style={styles.container}
+      >
         <ScrollView contentContainerStyle={{ padding: 10 }}>
           <MaterialTextInput
             touched

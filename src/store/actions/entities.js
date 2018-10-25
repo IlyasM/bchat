@@ -51,7 +51,6 @@ export default {
       ofType("GET_CATEGORIES"),
       withLatestFrom(state$),
       mergeMap(([action, { identity: { token } }]) => {
-        console.log(action)
         return ajax
           .get(baseURL + "categories", {
             ...headers,
@@ -77,7 +76,6 @@ export default {
     action$.pipe(
       ofType("CREATE_BUSINESS"),
       withLatestFrom(state$),
-
       mergeMap(([{ business, navigation }, { identity: { token } }]) =>
         ajax
           .post(
@@ -121,7 +119,10 @@ export default {
           )
           .pipe(
             map(({ response }) => {
+              console.log("here")
               navigation && navigation.navigate("Main")
+              console.log("here")
+
               return {
                 type: "CONNECT",
                 me: response.user

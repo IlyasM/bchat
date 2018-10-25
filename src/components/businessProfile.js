@@ -42,15 +42,10 @@ export default class comp extends PureComponent {
     this.props.navigation.navigate("Map")
   }
   render() {
-    const {
-      name,
-      address,
-      phoneNumbers,
-      long,
-      short,
-      image,
-      category
-    } = this.props.business
+    console.log(this.props.business)
+    const { name, address, phoneNumbers, long, short, image, category } =
+      this.props.business || this.props.navigation.state.params
+    const longText = long ? long : ""
     return (
       <View style={styles.view}>
         <View style={styles.row}>
@@ -66,10 +61,10 @@ export default class comp extends PureComponent {
           </TouchableOpacity>
         </View>
         <Text style={styles.name}> {name}</Text>
-        <Text style={styles.address}>{address}</Text>
+        <Text style={styles.address}>{category.name}</Text>
         <Separator full />
 
-        <Text style={styles.description}>{short}</Text>
+        <Text style={styles.description}>{short + longText}</Text>
       </View>
     )
   }

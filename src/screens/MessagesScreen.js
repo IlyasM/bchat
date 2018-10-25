@@ -10,6 +10,7 @@ export default class MessagesScreen extends Component {
       headerTitle: (
         <TouchableOpacity
           onPress={() => {
+            console.log(navigation.state.params)
             navigation.navigate("BusinessProfile", navigation.state.params)
           }}
           style={{ alignItems: "center", width: 200 }}
@@ -42,7 +43,6 @@ export default class MessagesScreen extends Component {
     const params = this.props.navigation.state.params
 
     const to = params.category ? `business:${params.id}` : `user:${params.id}`
-    console.log("-=-=-=-=-=-=-=", to, params)
     return (
       <View style={styles.container}>
         <MessageList
